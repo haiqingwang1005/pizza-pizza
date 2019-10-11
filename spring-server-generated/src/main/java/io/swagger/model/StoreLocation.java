@@ -5,32 +5,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Manufacturer;
+import io.swagger.model.Address;
+import io.swagger.model.GeoLocation;
 import java.util.UUID;
-import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * InventoryItem
+ * StoreLocation
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-11T06:27:17.732Z[GMT]")
-public class InventoryItem   {
+public class StoreLocation   {
   @JsonProperty("id")
   private UUID id = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("releaseDate")
-  private OffsetDateTime releaseDate = null;
+  @JsonProperty("geo_location")
+  private GeoLocation geoLocation = null;
 
-  @JsonProperty("manufacturer")
-  private Manufacturer manufacturer = null;
+  @JsonProperty("address")
+  private Address address = null;
 
-  public InventoryItem id(UUID id) {
+  public StoreLocation id(UUID id) {
     this.id = id;
     return this;
   }
@@ -51,7 +51,7 @@ public class InventoryItem   {
     this.id = id;
   }
 
-  public InventoryItem name(String name) {
+  public StoreLocation name(String name) {
     this.name = name;
     return this;
   }
@@ -60,7 +60,7 @@ public class InventoryItem   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "Widget Adapter", required = true, value = "")
+  @ApiModelProperty(example = "Seattle Pizza Store", required = true, value = "")
   @NotNull
 
   public String getName() {
@@ -71,46 +71,46 @@ public class InventoryItem   {
     this.name = name;
   }
 
-  public InventoryItem releaseDate(OffsetDateTime releaseDate) {
-    this.releaseDate = releaseDate;
+  public StoreLocation geoLocation(GeoLocation geoLocation) {
+    this.geoLocation = geoLocation;
     return this;
   }
 
   /**
-   * Get releaseDate
-   * @return releaseDate
-  **/
-  @ApiModelProperty(example = "2016-08-29T09:12:33.001Z", required = true, value = "")
-  @NotNull
-
-  @Valid
-  public OffsetDateTime getReleaseDate() {
-    return releaseDate;
-  }
-
-  public void setReleaseDate(OffsetDateTime releaseDate) {
-    this.releaseDate = releaseDate;
-  }
-
-  public InventoryItem manufacturer(Manufacturer manufacturer) {
-    this.manufacturer = manufacturer;
-    return this;
-  }
-
-  /**
-   * Get manufacturer
-   * @return manufacturer
+   * Get geoLocation
+   * @return geoLocation
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
   @Valid
-  public Manufacturer getManufacturer() {
-    return manufacturer;
+  public GeoLocation getGeoLocation() {
+    return geoLocation;
   }
 
-  public void setManufacturer(Manufacturer manufacturer) {
-    this.manufacturer = manufacturer;
+  public void setGeoLocation(GeoLocation geoLocation) {
+    this.geoLocation = geoLocation;
+  }
+
+  public StoreLocation address(Address address) {
+    this.address = address;
+    return this;
+  }
+
+  /**
+   * Get address
+   * @return address
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+  public Address getAddress() {
+    return address;
+  }
+
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
 
@@ -122,27 +122,27 @@ public class InventoryItem   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InventoryItem inventoryItem = (InventoryItem) o;
-    return Objects.equals(this.id, inventoryItem.id) &&
-        Objects.equals(this.name, inventoryItem.name) &&
-        Objects.equals(this.releaseDate, inventoryItem.releaseDate) &&
-        Objects.equals(this.manufacturer, inventoryItem.manufacturer);
+    StoreLocation storeLocation = (StoreLocation) o;
+    return Objects.equals(this.id, storeLocation.id) &&
+        Objects.equals(this.name, storeLocation.name) &&
+        Objects.equals(this.geoLocation, storeLocation.geoLocation) &&
+        Objects.equals(this.address, storeLocation.address);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, releaseDate, manufacturer);
+    return Objects.hash(id, name, geoLocation, address);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InventoryItem {\n");
+    sb.append("class StoreLocation {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    releaseDate: ").append(toIndentedString(releaseDate)).append("\n");
-    sb.append("    manufacturer: ").append(toIndentedString(manufacturer)).append("\n");
+    sb.append("    geoLocation: ").append(toIndentedString(geoLocation)).append("\n");
+    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("}");
     return sb.toString();
   }

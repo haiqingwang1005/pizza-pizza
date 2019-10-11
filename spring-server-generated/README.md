@@ -16,3 +16,9 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/  
 
 Change default port value in application.properties
+
+## Develop tips
+1. Build: `mvn install`
+2. Run and deploy to local host: `mvn spring-boot:run`
+3. Play: Go to http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/
+3.1: store locator API: `curl -X GET --header 'Accept: application/json' 'http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/stores'`
