@@ -22,9 +22,15 @@ public class StoresApiControllerIntegrationTest {
     private StoresApi api;
 
     @Test
-    public void listStoresTest() throws Exception {
+    public void listStoresTest() {
         ResponseEntity<List<StoreLocation>> responseEntity = api.listStores();
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        List<StoreLocation> storeLocationList = responseEntity.getBody();
+        assertEquals(storeLocationList.size(), 3);
+        assertEquals(storeLocationList.get(0).getName(), StoresApiController.PIZZA_STORE_1_NAME);
+        assertEquals(storeLocationList.get(1).getName(), StoresApiController.PIZZA_STORE_2_NAME);
+        assertEquals(storeLocationList.get(2).getName(), StoresApiController.PIZZA_STORE_3_NAME);
     }
 
 }
