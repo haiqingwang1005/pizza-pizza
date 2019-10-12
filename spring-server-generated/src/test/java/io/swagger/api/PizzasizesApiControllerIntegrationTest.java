@@ -16,22 +16,28 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class InventoryApiControllerIntegrationTest {
+public class PizzasizesApiControllerIntegrationTest {
 
     @Autowired
-    private PizzaSizeApi api;
+    private PizzasizesApi api;
 
     @Test
-    public void addInventoryTest() throws Exception {
+    public void addPizzaSizeTest() throws Exception {
         PizzaSize body = new PizzaSize();
         ResponseEntity<Void> responseEntity = api.addPizzaSize(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
-    public void searchInventoryTest() throws Exception {
-        Integer searchId = 1;
-        ResponseEntity<List<PizzaSize>> responseEntity = api.searchPizzaSize(searchId);
+    public void getPizzaSizesTest() throws Exception {
+        ResponseEntity<Void> responseEntity = api.getPizzaSizes();
+        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void getSizeByIdTest() throws Exception {
+        Long id = 789L;
+        ResponseEntity<Void> responseEntity = api.getSizeById(id);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
