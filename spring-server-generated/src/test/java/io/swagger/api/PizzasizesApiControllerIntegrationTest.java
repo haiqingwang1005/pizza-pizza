@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.ArrayOfPizzaSizes;
 import io.swagger.model.PizzaSize;
 
 import java.util.*;
@@ -30,14 +31,14 @@ public class PizzasizesApiControllerIntegrationTest {
 
     @Test
     public void getPizzaSizesTest() throws Exception {
-        ResponseEntity<Void> responseEntity = api.getPizzaSizes();
+        ResponseEntity<ArrayOfPizzaSizes> responseEntity = api.getPizzaSizes();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void getSizeByIdTest() throws Exception {
         Long id = 789L;
-        ResponseEntity<Void> responseEntity = api.getSizeById(id);
+        ResponseEntity<PizzaSize> responseEntity = api.getSizeById(id);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

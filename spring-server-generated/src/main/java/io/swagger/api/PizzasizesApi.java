@@ -5,6 +5,7 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.ArrayOfPizzaSizes;
 import io.swagger.model.PizzaSize;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-11T06:27:17.732Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-12T05:53:23.679Z[GMT]")
 @Api(value = "pizzasizes", description = "the pizzasizes API")
 public interface PizzasizesApi {
 
@@ -36,21 +37,23 @@ public interface PizzasizesApi {
     ResponseEntity<Void> addPizzaSize(@ApiParam(value = ""  )  @Valid @RequestBody PizzaSize body);
 
 
-    @ApiOperation(value = "search all pizza sizes", nickname = "getPizzaSizes", notes = "Searches all available pizza sizes available in the store ", tags={ "PizzaSize", })
+    @ApiOperation(value = "search all pizza sizes", nickname = "getPizzaSizes", notes = "Searches all available pizza sizes available in the store ", response = ArrayOfPizzaSizes.class, tags={ "PizzaSize", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The pizza size options"),
+        @ApiResponse(code = 200, message = "The pizza size options", response = ArrayOfPizzaSizes.class),
         @ApiResponse(code = 405, message = "Invalid input") })
     @RequestMapping(value = "/pizzasizes",
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getPizzaSizes();
+    ResponseEntity<ArrayOfPizzaSizes> getPizzaSizes();
 
 
-    @ApiOperation(value = "get a specific pizza size by size id", nickname = "getSizeById", notes = "", tags={ "PizzaSize", })
+    @ApiOperation(value = "get a specific pizza size by size id", nickname = "getSizeById", notes = "", response = PizzaSize.class, tags={ "PizzaSize", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successfully returned"),
+        @ApiResponse(code = 200, message = "successfully returned", response = PizzaSize.class),
         @ApiResponse(code = 401, message = "id doesn't exist") })
     @RequestMapping(value = "/pizzasizes/{id}",
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Void> getSizeById(@ApiParam(value = "id of pizza size to return",required=true) @PathVariable("id") Long id);
+    ResponseEntity<PizzaSize> getSizeById(@ApiParam(value = "id of pizza size to return",required=true) @PathVariable("id") Long id);
 
 }

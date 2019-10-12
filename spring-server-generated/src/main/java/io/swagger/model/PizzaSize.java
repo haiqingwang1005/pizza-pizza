@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * PizzaSize
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-12T02:58:15.127Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-12T05:53:23.679Z[GMT]")
 public class PizzaSize   {
   @JsonProperty("id")
   private Long id = null;
