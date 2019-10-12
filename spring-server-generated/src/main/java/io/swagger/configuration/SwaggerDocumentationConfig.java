@@ -16,13 +16,13 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Simple Inventory API")
-            .description("This is a simple API")
+            .title("Welcome to Pizza-Pizza")
+            .description("This is a Piazza API")
             .license("Apache 2.0")
             .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
             .termsOfServiceUrl("")
             .version("1.0.0")
-            .contact(new Contact("","", "you@your-company.com"))
+            .contact(new Contact("","", "bao.lu1@husky.neu.edu"))
             .build();
     }
 
