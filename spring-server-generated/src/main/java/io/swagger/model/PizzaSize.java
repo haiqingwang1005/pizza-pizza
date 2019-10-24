@@ -24,6 +24,24 @@ public class PizzaSize   {
   @JsonProperty("size")
   private Long size = null;
 
+  @JsonProperty("numberOfSlices")
+  private Integer numberOfSlices = null;
+
+  @JsonProperty("caloriesPerSlice")
+  private Integer caloriesPerSlice = null;
+
+  public PizzaSize(Long id, String description, Long size, int numberOfSlices, int caloriesPerSlice) {
+    this.id = id;
+    this.description = description;
+    this.size = size;
+    this.numberOfSlices = numberOfSlices;
+    this.caloriesPerSlice = caloriesPerSlice;
+  }
+
+  public PizzaSize() {
+
+  }
+
   public PizzaSize id(Long id) {
     this.id = id;
     return this;
@@ -82,6 +100,49 @@ public class PizzaSize   {
 
   public void setSize(Long size) {
     this.size = size;
+  }
+
+
+  public PizzaSize caloriesPerSlice(int  caloriesPerSlice) {
+    this.caloriesPerSlice = caloriesPerSlice;
+    return this;
+  }
+
+  /**
+   * Get calories per slice
+   * @return calories per slice
+   **/
+  @ApiModelProperty(example = "190", required = true, value = "")
+  @NotNull
+
+
+
+  public int getCaloriesPerSlice() {
+    return caloriesPerSlice;
+  }
+
+  public void setCaloriesPerSlice(int caloriesPerSlice) {
+    this.caloriesPerSlice = caloriesPerSlice;
+  }
+
+  public PizzaSize numberOfSlices(int numberOfSlices) {
+    this.numberOfSlices = numberOfSlices;
+    return this;
+  }
+
+  /**
+   * Get slices
+   * @return slices
+   **/
+  @ApiModelProperty(example = "8", required = true, value = "")
+  @NotNull
+
+  public int getnumberOfSlices() {
+    return numberOfSlices;
+  }
+
+  public void setnumberOfSlices(int numberOfSlices) {
+    this.numberOfSlices = numberOfSlices;
   }
 
 
