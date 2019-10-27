@@ -22,12 +22,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T05:48:43.671Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T04:50:36.457Z[GMT]")
 @Api(value = "toppings", description = "the toppings API")
 public interface ToppingsApi {
 
     @ApiOperation(value = "adds a topping item", nickname = "addTopping", notes = "Adds an item to the system", tags={ "admins", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 201, message = "item created"),
         @ApiResponse(code = 400, message = "invalid input, object invalid"),
         @ApiResponse(code = 409, message = "an existing item already exists") })
@@ -37,12 +37,22 @@ public interface ToppingsApi {
     ResponseEntity<Void> addTopping(@ApiParam(value = "Topping item to add"  )  @Valid @RequestBody Toppings body);
 
 
+    @ApiOperation(value = "deletes a topping item", nickname = "deleteTopping", notes = "Delete an item in the system", tags={ "admins", })
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "item deleted"),
+        @ApiResponse(code = 400, message = "invalid input, object invalid"),
+        @ApiResponse(code = 409, message = "an existing item doesn't exist") })
+    @RequestMapping(value = "/toppings",
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteTopping(@NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName,@ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,@ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
+
+
     @ApiOperation(value = "searches topping", nickname = "searchTopping", notes = "By passing in the appropriate options, you can search for available toppings in the system ", response = Toppings.class, responseContainer = "List", tags={ "developers", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "search results matching criteria", response = Toppings.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "bad input parameter") })
     @RequestMapping(value = "/toppings",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,@ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,@ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
 

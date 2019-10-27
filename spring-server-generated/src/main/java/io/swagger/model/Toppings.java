@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.ToppingType;
 import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -14,12 +15,8 @@ import javax.validation.constraints.*;
  * Toppings
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T05:48:43.671Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T04:50:36.457Z[GMT]")
 public class Toppings   {
-  public static final String ID = "id";
-  public static final String NAME = "name";
-  public static final String IS_GLUTTEN_FREE = "isGlutenFree";
-  public static final String IS_PREMIUM = "isPremium";
 
   @JsonProperty("id")
   private UUID id = null;
@@ -33,6 +30,12 @@ public class Toppings   {
   @JsonProperty("isPremium")
   private Boolean isPremium = null;
 
+  @JsonProperty("toppingType")
+  private ToppingType toppingType = null;
+
+  @JsonProperty("description")
+  private String description = null;
+
   public Toppings id(UUID id) {
     this.id = id;
     return this;
@@ -41,9 +44,8 @@ public class Toppings   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(example = "d290f1ee-6c54-4b01-90e6-d701748f0851", required = true, value = "")
-  @NotNull
+   **/
+  @ApiModelProperty(example = "d290f1ee-6c54-4b01-90e6-d701748f0851", required = false, value = "")
 
   @Valid
   public UUID getId() {
@@ -62,7 +64,7 @@ public class Toppings   {
   /**
    * Get name
    * @return name
-  **/
+   **/
   @ApiModelProperty(example = "Beef", required = true, value = "")
   @NotNull
 
@@ -82,7 +84,7 @@ public class Toppings   {
   /**
    * Get isGlutenFree
    * @return isGlutenFree
-  **/
+   **/
   @ApiModelProperty(example = "true", required = true, value = "")
   @NotNull
 
@@ -102,8 +104,8 @@ public class Toppings   {
   /**
    * Get isPremium
    * @return isPremium
-  **/
-  @ApiModelProperty(example = "true", required = true, value = "")
+   **/
+  @ApiModelProperty(required = true, value = "")
   @NotNull
 
   public Boolean isIsPremium() {
@@ -112,6 +114,47 @@ public class Toppings   {
 
   public void setIsPremium(Boolean isPremium) {
     this.isPremium = isPremium;
+  }
+
+  public Toppings toppingType(ToppingType toppingType) {
+    this.toppingType = toppingType;
+    return this;
+  }
+
+  /**
+   * Get toppingType
+   * @return toppingType
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+  public ToppingType getToppingType() {
+    return toppingType;
+  }
+
+  public void setToppingType(ToppingType toppingType) {
+    this.toppingType = toppingType;
+  }
+
+  public Toppings description(String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+   **/
+  @ApiModelProperty(example = "Gluten free premium beef as meat topping", required = true, value = "")
+  @NotNull
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 
@@ -127,23 +170,27 @@ public class Toppings   {
     return Objects.equals(this.id, toppings.id) &&
         Objects.equals(this.name, toppings.name) &&
         Objects.equals(this.isGlutenFree, toppings.isGlutenFree) &&
-        Objects.equals(this.isPremium, toppings.isPremium);
+        Objects.equals(this.isPremium, toppings.isPremium) &&
+        Objects.equals(this.toppingType, toppings.toppingType) &&
+        Objects.equals(this.description, toppings.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, isGlutenFree, isPremium);
+    return Objects.hash(id, name, isGlutenFree, isPremium, toppingType, description);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Toppings {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    isGlutenFree: ").append(toIndentedString(isGlutenFree)).append("\n");
     sb.append("    isPremium: ").append(toIndentedString(isPremium)).append("\n");
+    sb.append("    toppingType: ").append(toIndentedString(toppingType)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }
