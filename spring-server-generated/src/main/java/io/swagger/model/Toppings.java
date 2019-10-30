@@ -1,12 +1,16 @@
 package io.swagger.model;
 
+import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.ToppingType;
+import io.swagger.repository.ToppingsRepository;
+
 import java.util.UUID;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,9 +21,24 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T04:50:36.457Z[GMT]")
 public class Toppings   {
+  static public void initialize(ToppingsRepository repository) {
+    if (repository.count() > 0) {
+      return;
+    }
 
-  @JsonProperty("id")
-  private UUID id = null;
+    List<Toppings> defaults = new LinkedList<>();
+
+    System.err.println("[WARN] Adding default toppings!");
+
+    defaults.add(new Toppings().name("pepperoni").isGlutenFree(true).isPremium(false).toppingType(ToppingType.MEAT).description(""));
+    defaults.add(new Toppings().name("sausage").isGlutenFree(true).isPremium(false).toppingType(ToppingType.MEAT).description(""));
+    defaults.add(new Toppings().name("chicken").isGlutenFree(true).isPremium(true).toppingType(ToppingType.MEAT).description(""));
+    defaults.add(new Toppings().name("peppers").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
+    defaults.add(new Toppings().name("onions").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
+    defaults.add(new Toppings().name("mushrooms").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
+
+    repository.insert(defaults);
+  }
 
   @JsonProperty("name")
   private String name = null;
@@ -36,25 +55,11 @@ public class Toppings   {
   @JsonProperty("description")
   private String description = null;
 
-  public Toppings id(UUID id) {
-    this.id = id;
-    return this;
-  }
-
   /**
    * Get id
    * @return id
    **/
   @ApiModelProperty(example = "d290f1ee-6c54-4b01-90e6-d701748f0851", required = false, value = "")
-
-  @Valid
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
 
   public Toppings name(String name) {
     this.name = name;
@@ -167,8 +172,7 @@ public class Toppings   {
       return false;
     }
     Toppings toppings = (Toppings) o;
-    return Objects.equals(this.id, toppings.id) &&
-        Objects.equals(this.name, toppings.name) &&
+    return Objects.equals(this.name, toppings.name) &&
         Objects.equals(this.isGlutenFree, toppings.isGlutenFree) &&
         Objects.equals(this.isPremium, toppings.isPremium) &&
         Objects.equals(this.toppingType, toppings.toppingType) &&
@@ -177,7 +181,7 @@ public class Toppings   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, isGlutenFree, isPremium, toppingType, description);
+    return Objects.hash(name, isGlutenFree, isPremium, toppingType, description);
   }
 
   @Override
@@ -185,7 +189,6 @@ public class Toppings   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Toppings {\n");
 
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    isGlutenFree: ").append(toIndentedString(isGlutenFree)).append("\n");
     sb.append("    isPremium: ").append(toIndentedString(isPremium)).append("\n");
