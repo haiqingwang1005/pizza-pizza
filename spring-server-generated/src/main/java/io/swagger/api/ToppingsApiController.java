@@ -57,6 +57,7 @@ public class ToppingsApiController implements ToppingsApi {
           .isPremium(isPremium)
           .toppingType(toppingType)
           .description(description);
+
       toppingsRepository.save(existingTopping);
       return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -66,6 +67,7 @@ public class ToppingsApiController implements ToppingsApi {
         .isPremium(isPremium)
         .toppingType(toppingType)
         .description(description);
+
     toppingsRepository.insert(newTopping);
 
     log.info(
@@ -82,6 +84,7 @@ public class ToppingsApiController implements ToppingsApi {
       return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
     toppingsRepository.delete(exitingToppings);
+
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
@@ -90,6 +93,7 @@ public class ToppingsApiController implements ToppingsApi {
       @ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,
       @ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
       @ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
+
     List<Toppings> toppings = new ArrayList<>();
     if (searchName != null) {
       Toppings result = toppingsRepository.findByName(searchName);
