@@ -1,14 +1,14 @@
 package io.swagger.repository;
 
+import io.swagger.model.Toppings;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import io.swagger.model.Toppings;
-
 public interface ToppingsRepository extends MongoRepository<Toppings, UUID> {
-  public Toppings findByName(String name);
+  Toppings findByName(String name);
 
-  public List<Toppings> findByIsGlutenFreeIsTrue();
+  List<Toppings> findByIsGlutenFree(Boolean isGlutenFree);
+
+  List<Toppings> findByIsPremium(Boolean isPremium);
 }

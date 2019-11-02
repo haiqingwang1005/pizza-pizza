@@ -4,9 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import io.swagger.model.ToppingType;
+import io.swagger.model.Toppings;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,66 +16,58 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import io.swagger.model.ToppingType;
-import io.swagger.model.Toppings;
-
 @RunWith(SpringRunner.class)
-@TestPropertySource("classpath:/application-test.properties")
 @SpringBootTest
+@TestPropertySource("classpath:/application-test.properties")
 public class ToppingsRepositoryTest {
-  @Autowired
-  private ToppingsRepository repository;
-  
-@Before
-  public void setUp() throws Exception {
-    repository.deleteAll();
-    
-    Toppings topping = new Toppings();
-    topping.name("tomato").toppingType(ToppingType.VEGETABLE).isGlutenFree(true);
-    repository.insert(topping);
-  }
 
-  @After
-  public void tearDown() throws Exception {
-    repository.deleteAll();
+  @Autowired
+  private ToppingsRepository toppingsRepository;
+
+  @Before
+  public void setUp() {
+    toppingsRepository.deleteAll();
+    Toppings toppings = new Toppings().name("tomato")
+        .toppingType(ToppingType.VEGETABLE)
+        .isPremium(true)
+        .isGlutenFree(false);
+    toppingsRepository.insert(toppings);
   }
 
   @Test
-  public void testOnlyOneEntry() {
-    assertEquals(1, repository.count());
+  public void testSizeOnlyOne() {
+    assertEquals(1, toppingsRepository.findAll().size());
   }
 
   @Test
   public void testGetName() {
-    Toppings sauce = repository.findByName("tomato");
-  
-    assertEquals("tomato", sauce.getName());
-    assertFalse(sauce.getName().equals("bbq"));
+    Toppings toppings = toppingsRepository.findByName("tomato");
+    assertEquals("tomato", toppings.getName());
   }
 
   @Test
-  public void testContainsGluten() {
-    Toppings sauce = repository.findByName("tomato");
-  
-    assertTrue(sauce.isIsGlutenFree());
+  public void testIsGlutenFree() {
+    Toppings toppings = toppingsRepository.findByName("tomato");
+    assertFalse(toppings.isIsGlutenFree());
   }
 
   @Test
-  public void testToppingType() {
-    Toppings sauce = repository.findByName("tomato");
-  
-    assertTrue(sauce.getToppingType() == ToppingType.VEGETABLE);
+  public void testGetToppingType() {
+    Toppings toppings = toppingsRepository.findByName("tomato");
+    assertEquals(ToppingType.VEGETABLE,
+        toppings.getToppingType());
+  }
+
+  @Test
+  public void testIsPremium() {
+    Toppings toppings = toppingsRepository.findByName("tomato");
+    assertTrue(toppings.isIsPremium());
   }
 
   @Test
   public void testFindGlutenFree() {
-    List<Toppings> toppings = repository.findByIsGlutenFreeIsTrue();
-  
+    List<Toppings> toppings = toppingsRepository.findByIsGlutenFree(false);
     assertEquals(1, toppings.size());
-    
-    for (Toppings topping : toppings) {
-      assertEquals("tomato", topping.getName());
-    }
+    assertEquals("tomato", toppings.get(0).getName());
   }
-
 }

@@ -1,5 +1,8 @@
 package io.swagger;
 
+
+import io.swagger.model.Toppings;
+import io.swagger.repository.ToppingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -7,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import io.swagger.model.Toppings;
-import io.swagger.repository.ToppingsRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
@@ -16,14 +17,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = { "io.swagger", "io.swagger.api" , "io.swagger.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
 
-    @Autowired private ToppingsRepository toppingsRepository;
+
+    @Autowired
+    private ToppingsRepository toppingsRepository;
 
     @Override
     public void run(String... arg0) throws Exception {
         if (arg0.length > 0 && arg0[0].equals("exitcode")) {
             throw new ExitException();
         }
-
         Toppings.initialize(toppingsRepository);
     }
 

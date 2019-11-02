@@ -1,18 +1,16 @@
 package io.swagger.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.model.PizzaSize;
 
 import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static junit.framework.TestCase.assertTrue;
@@ -20,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource("classpath:/application-test.properties")
 public class PizzasizesApiControllerIntegrationTest {
 
     @Autowired

@@ -4,30 +4,20 @@ import io.swagger.model.Address;
 import io.swagger.model.GeoLocation;
 import io.swagger.model.StoreLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
+import javax.annotation.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-11T06:27:17.732Z[GMT]")
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-11T06:27:17.732Z[GMT]")
 @Controller
 public class StoresApiController implements StoresApi {
 
@@ -61,19 +51,16 @@ public class StoresApiController implements StoresApi {
 
   private final HttpServletRequest request;
 
-  @org.springframework.beans.factory.annotation.Autowired
+  @Autowired
   public StoresApiController(ObjectMapper objectMapper, HttpServletRequest request) {
     this.objectMapper = objectMapper;
     this.request = request;
   }
 
   public ResponseEntity<List<StoreLocation>> listStores() {
-    String accept = request.getHeader("Accept");
-
     List<StoreLocation> storeLocationList = new ArrayList<>();
 
     StoreLocation seattleStore = new StoreLocation();
-    seattleStore.setId(UUID.fromString("111-222-333-444-1"));
     seattleStore.setName(PIZZA_STORE_1_NAME);
     seattleStore.setGeoLocation(new GeoLocation().latitude(BigDecimal.valueOf(PIZZA_STORE_1_LAT))
         .longtitude(BigDecimal.valueOf(PIZZA_STORE_1_LON)));
@@ -82,7 +69,6 @@ public class StoresApiController implements StoresApi {
         .zip(PIZZA_STORE_1_ZIP));
 
     StoreLocation houstonStore = new StoreLocation();
-    houstonStore.setId(UUID.fromString("111-222-333-444-2"));
     houstonStore.setName(PIZZA_STORE_2_NAME);
     houstonStore.setGeoLocation(new GeoLocation().latitude(BigDecimal.valueOf(PIZZA_STORE_2_LAT))
         .longtitude(BigDecimal.valueOf(PIZZA_STORE_2_LON)));
@@ -91,7 +77,6 @@ public class StoresApiController implements StoresApi {
         .zip(PIZZA_STORE_2_ZIP));
 
     StoreLocation newYorkStore = new StoreLocation();
-    newYorkStore.setId(UUID.fromString("111-222-333-444-3"));
     newYorkStore.setName(PIZZA_STORE_3_NAME);
     newYorkStore.setGeoLocation(new GeoLocation().latitude(BigDecimal.valueOf(PIZZA_STORE_3_LAT))
         .longtitude(BigDecimal.valueOf(PIZZA_STORE_3_LON)));

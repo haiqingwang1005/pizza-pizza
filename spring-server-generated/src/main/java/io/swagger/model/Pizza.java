@@ -33,7 +33,7 @@ public class Pizza   {
 
   @JsonProperty("toppings")
   @Valid
-  private List<Topping> toppings = null;
+  private List<Toppings> toppings = null;
 
   public Pizza id(String id) {
     this.id = id;
@@ -136,14 +136,14 @@ public class Pizza   {
     this.ownerId = ownerId;
   }
 
-  public Pizza toppings(List<Topping> toppings) {
+  public Pizza toppings(List<Toppings> toppings) {
     this.toppings = toppings;
     return this;
   }
 
-  public Pizza addToppingsItem(Topping toppingsItem) {
+  public Pizza addToppingsItem(Toppings toppingsItem) {
     if (this.toppings == null) {
-      this.toppings = new ArrayList<Topping>();
+      this.toppings = new ArrayList<Toppings>();
     }
     this.toppings.add(toppingsItem);
     return this;
@@ -157,11 +157,11 @@ public class Pizza   {
 
   @Valid
 
-  public List<Topping> getToppings() {
+  public List<Toppings> getToppings() {
     return toppings;
   }
 
-  public void setToppings(List<Topping> toppings) {
+  public void setToppings(List<Toppings> toppings) {
     this.toppings = toppings;
   }
 

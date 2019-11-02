@@ -20,7 +20,6 @@ Change default port value in application.properties
 ## Local Develop tips
 1. Build: `mvn install`
 2. Run and deploy to local host: `mvn spring-boot:run`
-3. Start mongodb local server: `mongod --config /usr/local/etc/mongod.conf`
 3. Play: Go to http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/
 3.1: store locator API: `curl -X GET --header 'Accept: application/json' 'http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/stores'`
 3.2: toppings add API: `curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{  "id": "d290f1ee-6c54-4b01-90e6-d701748f0851", "isGlutenFree": true, "isPremium": true, "name": "Mushroom" }' 'http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/toppings'`
@@ -28,60 +27,4 @@ Change default port value in application.properties
 Use: `curl -X GET --header 'Accept: application/json' 'https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/stores'
 
 # API documentation
-## Store Locator API
-The store locator API lists all stores locations provided by product owner. It should return both the street address and the latitude/longitude of each store.
-1. Request parameters: N/A
-2. Response: 
-
-```json
-[
-  {
-    "id": "00000111-0222-0333-0444-000000000001",
-    "name": "Pizza Seattle!",
-    "geo_location": {
-      "longtitude": -122.339351,
-      "latitude": 47.626191
-    },
-    "address": {
-      "address1": "731 Westlake Ave N",
-      "address2": null,
-      "city": "Seattle",
-      "zip": "98109",
-      "state": "WA"
-    }
-  },
-  {
-    "id": "00000111-0222-0333-0444-000000000002",
-    "name": "Pizza Houston!",
-    "geo_location": {
-      "longtitude": -95.33105,
-      "latitude": 29.734648
-    },
-    "address": {
-      "address1": "724 Telephone Rd",
-      "address2": null,
-      "city": "Houston",
-      "zip": "77023",
-      "state": "TX"
-    }
-  },
-  {
-    "id": "00000111-0222-0333-0444-000000000003",
-    "name": "Pizza New York!",
-    "geo_location": {
-      "longtitude": -73.98589,
-      "latitude": 40.738548
-    },
-    "address": {
-      "address1": "2 Lexington Ave",
-      "address2": null,
-      "city": "New York",
-      "zip": "10010",
-      "state": "NY"
-    }
-  }
-]
-```
-3, Example: `curl -X GET --header 'Accept: application/json' 'http://localhost:8080/cs5500/Pizza_Pizza/1.0.0/stores'`
-
-##Toppings API
+Please check https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/swagger-ui.html#/

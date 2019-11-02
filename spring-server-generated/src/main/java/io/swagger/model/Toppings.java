@@ -1,15 +1,11 @@
 package io.swagger.model;
 
+import io.swagger.repository.ToppingsRepository;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedList;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.ToppingType;
-import io.swagger.repository.ToppingsRepository;
-
-import java.util.UUID;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -21,24 +17,44 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T04:50:36.457Z[GMT]")
 public class Toppings   {
-  static public void initialize(ToppingsRepository repository) {
-    if (repository.count() > 0) {
+
+  static public void initialize(ToppingsRepository toppingsRepository) {
+    if (toppingsRepository.count() > 0) {
       return;
     }
+    System.err.println("[INFO] Adding default toppings!");
 
-    List<Toppings> defaults = new LinkedList<>();
+    List<Toppings> defaults = new ArrayList<>();
+    defaults.add(new Toppings().name("pepperoni").isGlutenFree(true)
+        .isPremium(false).toppingType(ToppingType.MEAT)
+        .description("Thid is test pepperoni topping."));
 
-    System.err.println("[WARN] Adding default toppings!");
+    defaults.add(new Toppings().name("sausage").isGlutenFree(true)
+        .isPremium(false).toppingType(ToppingType.MEAT)
+        .description("Thid is test sausage topping."));
 
-    defaults.add(new Toppings().name("pepperoni").isGlutenFree(true).isPremium(false).toppingType(ToppingType.MEAT).description(""));
-    defaults.add(new Toppings().name("sausage").isGlutenFree(true).isPremium(false).toppingType(ToppingType.MEAT).description(""));
-    defaults.add(new Toppings().name("chicken").isGlutenFree(true).isPremium(true).toppingType(ToppingType.MEAT).description(""));
-    defaults.add(new Toppings().name("peppers").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
-    defaults.add(new Toppings().name("onions").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
-    defaults.add(new Toppings().name("mushrooms").isGlutenFree(true).isPremium(false).toppingType(ToppingType.VEGETABLE).description(""));
+    defaults.add(new Toppings().name("chicken").isGlutenFree(true)
+        .isPremium(true).toppingType(ToppingType.MEAT)
+        .description("Thid is test chicken topping."));
 
-    repository.insert(defaults);
+    defaults.add(new Toppings().name("peppers").isGlutenFree(false)
+        .isPremium(false).toppingType(ToppingType.VEGETABLE)
+        .description("Thid is test peppers topping."));
+
+    defaults.add(new Toppings().name("onions").isGlutenFree(true)
+        .isPremium(false).toppingType(ToppingType.VEGETABLE)
+        .description("Thid is onions peppers topping."));
+
+    defaults.add(new Toppings().name("mushroom").isGlutenFree(false)
+        .isPremium(true).toppingType(ToppingType.VEGETABLE)
+        .description("Thid is test mushroom topping."));
+
+    toppingsRepository.insert(defaults);
   }
+
+  @JsonProperty("id")
+  @Id
+  private String id = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -55,11 +71,21 @@ public class Toppings   {
   @JsonProperty("description")
   private String description = null;
 
+
+  public Toppings id(String id) {
+    this.id = id;
+    return this;
+  }
+
   /**
    * Get id
    * @return id
    **/
-  @ApiModelProperty(example = "d290f1ee-6c54-4b01-90e6-d701748f0851", required = false, value = "")
+  @ApiModelProperty(example = "5dbcdb313f197a67bf4d66cf", required = false, value = "")
+
+  public String getId() {
+    return id;
+  }
 
   public Toppings name(String name) {
     this.name = name;
@@ -188,7 +214,6 @@ public class Toppings   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Toppings {\n");
-
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    isGlutenFree: ").append(toIndentedString(isGlutenFree)).append("\n");
     sb.append("    isPremium: ").append(toIndentedString(isPremium)).append("\n");

@@ -35,7 +35,7 @@ public class PizzasizesApiController implements PizzasizesApi {
   static final int caloriesPerSlice1 = 190;
   static final int caloriesPerSlice2 = 280;
   static final int caloriesPerSlice3 = 290;
-  static final List<PizzaSize> listOfPizzaSize = new ArrayList<>();
+  private final List<PizzaSize> listOfPizzaSize = new ArrayList<>();
 
   private static final Logger log = LoggerFactory.getLogger(PizzasizesApiController.class);
   private final ObjectMapper objectMapper;

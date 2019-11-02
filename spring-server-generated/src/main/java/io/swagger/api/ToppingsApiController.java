@@ -1,35 +1,25 @@
 package io.swagger.api;
 
-import static com.mongodb.client.model.Filters.and;
-
-import io.swagger.configuration.Constants;
 import io.swagger.model.ToppingType;
 import io.swagger.model.Toppings;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.repository.ToppingsRepository;
 
 import java.util.ArrayList;
-import java.util.UUID;
-import org.bson.Document;
-import org.bson.conversions.Bson;
+import java.util.HashSet;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-22T05:48:43.671Z[GMT]")
@@ -40,8 +30,8 @@ public class ToppingsApiController implements ToppingsApi {
 
   private static final Logger log = LoggerFactory.getLogger(ToppingsApiController.class);
 
-
-  @Autowired private ToppingsRepository toppingsRepository;
+  @Autowired
+  private ToppingsRepository toppingsRepository;
 
   private final HttpServletRequest request;
 
@@ -50,6 +40,7 @@ public class ToppingsApiController implements ToppingsApi {
     this.request = request;
   }
 
+  @Override
   public ResponseEntity<Void> addTopping(
       @ApiParam(value = "Topping item to add") @Valid @RequestBody Toppings body) {
 
@@ -61,16 +52,21 @@ public class ToppingsApiController implements ToppingsApi {
 
     Toppings existingTopping = toppingsRepository.findByName(name);
     if (existingTopping != null) {
-      log.info(String.format("SB SB name %s already exists! override it!", name));
-      existingTopping.isGlutenFree(isGlutenFree).isPremium(isPremium).toppingType(toppingType).description(description);
+
+      log.info(String.format("PizzaPizza Toppings name %s already exists! override it!", name));
+      existingTopping.isGlutenFree(isGlutenFree)
+          .isPremium(isPremium)
+          .toppingType(toppingType)
+          .description(description);
       toppingsRepository.save(existingTopping);
       return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    // have to create a new topping
     Toppings newTopping = new Toppings();
-    newTopping.name(name).isGlutenFree(isGlutenFree).isPremium(isPremium).toppingType(toppingType).description(description);
-
+    newTopping.name(name).isGlutenFree(isGlutenFree)
+        .isPremium(isPremium)
+        .toppingType(toppingType)
+        .description(description);
     toppingsRepository.insert(newTopping);
 
     log.info(
@@ -79,27 +75,43 @@ public class ToppingsApiController implements ToppingsApi {
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
+  @Override
   public ResponseEntity<Void> deleteTopping(
-      @NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName,
-      @ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
-      @ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
-    String accept = request.getHeader("Accept");
-
-    Toppings existingTopping = toppingsRepository.findByName(searchName);
-    if (existingTopping == null) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      @NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName) {
+    Toppings exitingToppings = toppingsRepository.findByName(searchName);
+    if (exitingToppings == null) {
+      return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
-
-    toppingsRepository.delete(existingTopping);
+    toppingsRepository.delete(exitingToppings);
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
+  @Override
   public ResponseEntity<List<Toppings>> searchTopping(
       @ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,
       @ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
       @ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
 
-    return new ResponseEntity<List<Toppings>>(toppingsRepository.findAll(), HttpStatus.OK);
+    List<Toppings> toppings = new ArrayList<>();
+    if (searchName != null) {
+      Toppings result = toppingsRepository.findByName(searchName);
+      if (result != null) {
+        toppings.add(result);
+      }
+    } else {
+      Set<Toppings> set = new HashSet<>();
+      set.addAll(toppingsRepository.findAll());
+      if (searchGlutenFree != null) {
+        set.retainAll(toppingsRepository.findByIsGlutenFree(searchGlutenFree));
+      }
+      if (searchPremium != null) {
+        set.retainAll(toppingsRepository.findByIsPremium(searchPremium));
+      }
+      toppings.addAll(set);
+    }
+    if (toppings.isEmpty()) {
+      return new ResponseEntity<List<Toppings>>(toppings, HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<List<Toppings>>(toppings, HttpStatus.OK);
   }
-
 }

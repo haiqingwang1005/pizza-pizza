@@ -5,7 +5,7 @@ pizza/.idea/compiler.xml
 pizza/.idea/misc.xml
 pizza/.idea/vcs.xml
 pizza/.idea/workspace.xml
-spring-server-generated/.idea/*
+spring-server-generated/.idea
 spring-server-generated/.idea/compiler.xml
 spring-server-generated/.idea/misc.xml
 spring-server-generated/.idea/vcs.xml
