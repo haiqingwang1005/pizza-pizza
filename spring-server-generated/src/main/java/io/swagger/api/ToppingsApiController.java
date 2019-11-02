@@ -52,7 +52,6 @@ public class ToppingsApiController implements ToppingsApi {
 
     Toppings existingTopping = toppingsRepository.findByName(name);
     if (existingTopping != null) {
-
       log.info(String.format("PizzaPizza Toppings name %s already exists! override it!", name));
       existingTopping.isGlutenFree(isGlutenFree)
           .isPremium(isPremium)
@@ -91,7 +90,6 @@ public class ToppingsApiController implements ToppingsApi {
       @ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,
       @ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
       @ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
-
     List<Toppings> toppings = new ArrayList<>();
     if (searchName != null) {
       Toppings result = toppingsRepository.findByName(searchName);

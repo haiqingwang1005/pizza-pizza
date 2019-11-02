@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T04:50:36.457Z[GMT]")
 public class Toppings   {
-
   static public void initialize(ToppingsRepository toppingsRepository) {
     if (toppingsRepository.count() > 0) {
       return;
@@ -70,7 +69,6 @@ public class Toppings   {
 
   @JsonProperty("description")
   private String description = null;
-
 
   public Toppings id(String id) {
     this.id = id;

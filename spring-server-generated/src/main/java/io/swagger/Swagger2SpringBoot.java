@@ -1,6 +1,5 @@
 package io.swagger;
 
-
 import io.swagger.model.Toppings;
 import io.swagger.repository.ToppingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan(basePackages = { "io.swagger", "io.swagger.api" , "io.swagger.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
-
 
     @Autowired
     private ToppingsRepository toppingsRepository;
