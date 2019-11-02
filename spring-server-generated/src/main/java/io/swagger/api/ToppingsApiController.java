@@ -57,7 +57,6 @@ public class ToppingsApiController implements ToppingsApi {
           .isPremium(isPremium)
           .toppingType(toppingType)
           .description(description);
-
       toppingsRepository.save(existingTopping);
       return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -67,7 +66,6 @@ public class ToppingsApiController implements ToppingsApi {
         .isPremium(isPremium)
         .toppingType(toppingType)
         .description(description);
-
     toppingsRepository.insert(newTopping);
 
     log.info(
@@ -84,7 +82,6 @@ public class ToppingsApiController implements ToppingsApi {
       return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
     toppingsRepository.delete(exitingToppings);
-
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 

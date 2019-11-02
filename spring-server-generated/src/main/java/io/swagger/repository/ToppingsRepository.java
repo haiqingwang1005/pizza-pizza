@@ -12,4 +12,3 @@ public interface ToppingsRepository extends MongoRepository<Toppings, UUID> {
 
   List<Toppings> findByIsPremium(Boolean isPremium);
 }
-
