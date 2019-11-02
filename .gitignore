@@ -12,3 +12,5 @@ spring-server-generated/.idea/vcs.xml
 spring-server-generated/swagger-spring.iml
 api.yml
 spring-server-generated/target/
+spring-server-generated/.swagger-codegen
+spring-server-generated/.swagger-codegen-ignore
