@@ -6,7 +6,6 @@
     <name>swagger-spring</name>
     <version>1.0.0</version>
     <properties>
-        <maven.test.skip>true</maven.test.skip>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -20,6 +19,7 @@
         <version>1.5.9.RELEASE</version>
     </parent>
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -51,6 +51,17 @@
                                 <dateLibrary>java8</dateLibrary>
                             </configOptions>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
