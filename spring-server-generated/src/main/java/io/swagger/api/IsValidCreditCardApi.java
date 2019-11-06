@@ -31,13 +31,11 @@ public interface IsValidCreditCardApi {
         @ApiResponse(code = 200, message = "returned successfully"),
         @ApiResponse(code = 404, message = "bad input") })
     @RequestMapping(value = "/isValidCreditCard",
-        method = RequestMethod.GET)
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
     ResponseEntity<Boolean> isValid(
-        @ApiParam(value = "the credit card type",required=true) @Valid @RequestParam(value = "creditCardType", required = true) String creditCardType,
-        @ApiParam(value = "nameOnCard",required=true) @Valid @RequestParam(value = "nameOnCard", required = true) String nameOnCard,
-        @ApiParam(value = "card number",required=true) @Valid @RequestParam(value = "cardNumber", required = true) String cardNumber,
-        @ApiParam(value = "expire Year",required=true) @Valid @RequestParam(value = "expireYear", required = true) int expireYear,
-        @ApiParam(value = "expire Month",required=true) @Valid @RequestParam(value = "expireMonth", required = true) int expireMonth);
+        @ApiParam(value = "the credit card",required=true) @Valid @RequestBody CreditCard creditCard);
+
 
 
     /*

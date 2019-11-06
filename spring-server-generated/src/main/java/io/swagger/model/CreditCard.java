@@ -70,6 +70,18 @@ public class CreditCard   {
     return this;
   }
 
+  public CreditCard() {
+
+  }
+  public CreditCard(String creditCardType, String nameOnCard, String cardNumber,
+      Integer expireYear, Integer expireMonth) {
+    this.creditCardType = creditCardType;
+    this.nameOnCard = nameOnCard;
+    this.cardNumber = cardNumber;
+    this.expireYear = expireYear;
+    this.expireMonth = expireMonth;
+  }
+
   /**
    * Get creditCardType
    * @return creditCardType

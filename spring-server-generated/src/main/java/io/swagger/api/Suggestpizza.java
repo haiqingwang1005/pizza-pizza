@@ -9,13 +9,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.model.PizzaSize;
-import java.util.HashMap;
+import io.swagger.model.Eater;
+import io.swagger.model.SuggestedPizzaSizeOrder;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-23T18:23:25.075Z[GMT]")
 @Api(value = "suggestpizza", description = "the suggestpizza API")
@@ -25,12 +25,11 @@ public interface Suggestpizza {
       "SuggestPizzaOrder",})
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "The pizza number and size to order"),
-      @ApiResponse(code = 405, message = "Invalid input")})
+      @ApiResponse(code = 400, message = "Invalid input， negative adults/children")})
   @RequestMapping(value = "/suggestpizza",
-      produces = {"application/json"},
-      method = RequestMethod.GET)
-  ResponseEntity<HashMap<String, Integer>> getOrder(
-      @ApiParam(value = "the number of adult") @Valid @RequestParam(value = "Adult", required = false) Integer adult,
-      @ApiParam(value = "the number of child") @Valid @RequestParam(value = "Child", required = false) Integer child);
+      consumes = {"application/json"},
+      method = RequestMethod.POST)
+  ResponseEntity<SuggestedPizzaSizeOrder> getOrder(
+      @ApiParam(value = "the number of adult") @Valid @RequestBody Eater eater);
 
 }

@@ -40,7 +40,8 @@ public class PaymentControllerIntegrationTest {
         String cardNumber = "378282246310005";
         int expireMonth = 12;
         int expireYear= 2020;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.TRUE, responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -52,7 +53,8 @@ public class PaymentControllerIntegrationTest {
         String cardNumber = "378282246310005";
         int expireMonth = 12;
         int expireYear= 2020;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.FALSE, responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -65,7 +67,8 @@ public class PaymentControllerIntegrationTest {
         String cardNumber = "378282246310005";
         int expireMonth = 14;
         int expireYear= 2020;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.FALSE, responseEntity.getBody());
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
@@ -79,7 +82,8 @@ public class PaymentControllerIntegrationTest {
         String cardNumber = "378282246310005";
         int expireMonth = 11;
         int expireYear= 2018;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.FALSE, responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -87,13 +91,14 @@ public class PaymentControllerIntegrationTest {
 
     @Test
     public void testAlreadyExpired() throws Exception {
-        CreditCard creditCard = new CreditCard();
+
         String cardType = "Diners Club";
         String cardName = "Test";
         String cardNumber = "378282246310005";
         int expireMonth = 1;
         int expireYear= 2019;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.FALSE, responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -101,13 +106,14 @@ public class PaymentControllerIntegrationTest {
 
     @Test
     public void testInvalidCardType() throws Exception {
-        CreditCard creditCard = new CreditCard();
+
         String cardType = "Apple";
         String cardName = "Test";
         String cardNumber = "378282246310005";
         int expireMonth = 1;
         int expireYear= 2020;
-        ResponseEntity<Boolean> responseEntity = api.isValid(cardType,cardName,cardNumber,expireYear,expireMonth);
+        CreditCard creditCard = new CreditCard(cardType,cardName,cardNumber,expireYear,expireMonth);
+        ResponseEntity<Boolean> responseEntity = api.isValid(creditCard);
         assertEquals(Boolean.FALSE, responseEntity.getBody());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
