@@ -1,7 +1,13 @@
 package io.swagger;
 
 
+import io.swagger.model.Calories;
+import io.swagger.model.CreditCard;
+import io.swagger.model.PizzaSize;
 import io.swagger.model.Toppings;
+import io.swagger.repository.CaloriesRepository;
+import io.swagger.repository.CreditCardsRepository;
+import io.swagger.repository.PizzaSizesRepository;
 import io.swagger.repository.ToppingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +25,12 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     
     @Autowired
     private ToppingsRepository toppingsRepository;
+    @Autowired
+    private CreditCardsRepository creditCardsRepository;
+    @Autowired
+    private PizzaSizesRepository pizzaSizesRepository;
+    @Autowired
+    private CaloriesRepository caloriesRepository;
 
     @Override
     public void run(String... arg0) throws Exception {
@@ -26,6 +38,9 @@ public class Swagger2SpringBoot implements CommandLineRunner {
             throw new ExitException();
         }
         Toppings.initialize(toppingsRepository);
+        CreditCard.initialize(creditCardsRepository);
+        PizzaSize.initialize(pizzaSizesRepository);
+        Calories.initialize(caloriesRepository);
     }
 
     public static void main(String[] args) throws Exception {

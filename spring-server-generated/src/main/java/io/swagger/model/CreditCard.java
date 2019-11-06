@@ -1,5 +1,11 @@
 package io.swagger.model;
 
+import io.swagger.repository.CreditCardsRepository;
+import io.swagger.repository.ToppingsRepository;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,6 +21,35 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-25T17:23:10.744Z[GMT]")
 public class CreditCard   {
+  static public void initialize(CreditCardsRepository creditCardsRepository) {
+    if (creditCardsRepository.count() > 0) {
+      return;
+    }
+    System.err.println("[INFO] Adding default credit cards!");
+
+    List<CreditCard> defaults = new ArrayList<>();
+    defaults.add(new CreditCard().creditCardType("American Express").cardNumber("378282246310005"));
+    defaults.add(new CreditCard().creditCardType("American Express").cardNumber("371449635398431"));
+    defaults.add(new CreditCard().creditCardType("American Express Corporate").cardNumber("378734493671000"));
+    defaults.add(new CreditCard().creditCardType("Australian BankCard").cardNumber("5610591081018250"));
+    defaults.add(new CreditCard().creditCardType("Diners Club").cardNumber("30569309025904"));
+    defaults.add(new CreditCard().creditCardType("Diners Club").cardNumber("38520000023237"));
+    defaults.add(new CreditCard().creditCardType("Discover").cardNumber("6011111111111117"));
+    defaults.add(new CreditCard().creditCardType("Discover").cardNumber("6011000990139424"));
+    defaults.add(new CreditCard().creditCardType("JCB").cardNumber("3530111333300000"));
+    defaults.add(new CreditCard().creditCardType("JCB").cardNumber("3566002020360505"));
+    defaults.add(new CreditCard().creditCardType("MasterCard").cardNumber("5555555555554444"));
+    defaults.add(new CreditCard().creditCardType("MasterCard").cardNumber("5105105105105100"));
+    defaults.add(new CreditCard().creditCardType("Visa").cardNumber("4111111111111111"));
+    defaults.add(new CreditCard().creditCardType("Visa").cardNumber("4012888888881881"));
+    defaults.add(new CreditCard().creditCardType("Visa").cardNumber("4222222222222"));
+    defaults.add(new CreditCard().creditCardType("Dankort(PBS)").cardNumber("76009244561"));
+    defaults.add(new CreditCard().creditCardType("Dankort(PBS)").cardNumber("5019717010103742"));
+    defaults.add(new CreditCard().creditCardType("Switch/Solo(Paymentech)").cardNumber("6331101999990016"));
+
+    creditCardsRepository.insert(defaults);
+  }
+
   @JsonProperty("creditCardType")
   private String creditCardType = null;
 

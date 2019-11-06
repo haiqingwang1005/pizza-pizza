@@ -18,7 +18,7 @@ import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-12T05:53:23.679Z[GMT]")
 @Api(value = "pizzasizes", description = "the pizzasizes API")
-public interface PizzasizesApi {
+public interface Pizzasizes {
 
     @ApiOperation(value = "add a pizza size", nickname = "addPizzaSize", notes = "Adds a pizza size into the system", tags={ "PizzaSize", })
     @ApiResponses(value = { 

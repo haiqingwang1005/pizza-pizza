@@ -2,8 +2,10 @@ package io.swagger.api;
 
 import io.swagger.model.PizzaSize;
 
+import io.swagger.repository.PizzaSizesRepository;
 import java.util.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,47 +21,54 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("classpath:/application-test.properties")
-public class PizzasizesApiControllerIntegrationTest {
+public class PizzasizesControllerIntegrationTest {
 
     @Autowired
-    private PizzasizesApiController api;
+    private PizzaSizesRepository pizzaSizesRepository;
+
+    @Autowired
+    private PizzasizesController api;
+
+    @Before
+    public void setUp() {
+        pizzaSizesRepository.deleteAll();
+        PizzaSize.initialize(pizzaSizesRepository);
+    }
 
     @Test
     public void getPizzaSizesTest() throws Exception {
         ResponseEntity<List<PizzaSize>> responseEntity = api.getPizzaSizes();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         List<PizzaSize> list = responseEntity.getBody();
-        assertTrue(list.get(0).getDescription().equals("small"));
-        assertTrue(list.get(1).getDescription().equals("regular"));
-        assertTrue(list.get(2).getDescription().equals("large"));
+        assertEquals(3, list.size());
 
     }
 
     @Test
     public void addPizzaSizeTest() throws Exception {
-        PizzaSize body = new PizzaSize(4L,"XLarge", 20L, 15, 350);
-        ResponseEntity<Void> responseEntity = api.addPizzaSize(body);
+        PizzaSize pizzaSize = new PizzaSize();
+        pizzaSize.id(4L).description("XLarge").size(20L).numberOfSlices(15).caloriesPerSlice(350);
+
+        ResponseEntity<Void> responseEntity = api.addPizzaSize(pizzaSize);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(4,api.getPizzaSizes().getBody().size());
-        assertTrue(api.getPizzaSizes().getBody().get(3).getDescription().equals("XLarge"));
-
-        PizzaSize bodyTest = new PizzaSize(1L,"XLarge", 20L, 15, 350);
-        assertEquals(HttpStatus.BAD_REQUEST, api.addPizzaSize(bodyTest).getStatusCode());
-
-        PizzaSize bodyTest2 = new PizzaSize(7L,"small", 20L, 15, 350);
-        assertEquals(HttpStatus.BAD_REQUEST, api.addPizzaSize(bodyTest2).getStatusCode());
-
     }
 
     @Test
+    public void addDuplicatePizzaSizeIDTest() {
+        PizzaSize pizzaSize = new PizzaSize();
+        pizzaSize.id(1L).description("XLarge").size(20L).numberOfSlices(15).caloriesPerSlice(350);
+        ResponseEntity<Void> responseEntity = api.addPizzaSize(pizzaSize);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+
+    @Test
     public void deletePizzaSizeByIdTest() throws Exception {
-        Long id = 4L;
+        Long id = 3L;
         ResponseEntity<Void> responseEntity = api.deletePizzaSizeById(id);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(3,api.getPizzaSizes().getBody().size());
-        assertTrue(api.getPizzaSizes().getBody().get(0).getDescription().equals("small"));
-        assertTrue(api.getPizzaSizes().getBody().get(1).getDescription().equals("regular"));
-        assertTrue(api.getPizzaSizes().getBody().get(2).getDescription().equals("large"));
+        assertEquals(2,api.getPizzaSizes().getBody().size());
     }
 
 
@@ -74,7 +83,7 @@ public class PizzasizesApiControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         Long idTest = 100L;
-        assertEquals(HttpStatus.NOT_FOUND,api.getSizeById(idTest).getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST,api.getSizeById(idTest).getStatusCode());
 
     }
 

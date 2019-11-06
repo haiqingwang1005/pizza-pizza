@@ -4,19 +4,22 @@
  */
 package io.swagger.api;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.model.PizzaSize;
 import java.util.HashMap;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-23T18:23:25.075Z[GMT]")
 @Api(value = "suggestpizza", description = "the suggestpizza API")
-public interface SuggestpizzaApi {
+public interface Suggestpizza {
 
   @ApiOperation(value = "return a suggested order given the number and type of eaters.", nickname = "getOrder", notes = "Given the number and type of eaters, it provides info on how many pizzas to ordeer.  ", tags = {
       "SuggestPizzaOrder",})

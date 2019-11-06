@@ -1,5 +1,9 @@
 package io.swagger.model;
 
+import io.swagger.repository.PizzaSizesRepository;
+import io.swagger.repository.ToppingsRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,6 +19,19 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-12T05:53:23.679Z[GMT]")
 public class PizzaSize   {
+  static public void initialize(PizzaSizesRepository pizzaSizesRepository) {
+    if (pizzaSizesRepository.count() > 0) {
+      return;
+    }
+    System.err.println("[INFO] Adding default piazza sizes!");
+
+    List<PizzaSize> defaults = new ArrayList<>();
+    defaults.add(new PizzaSize().id(1L).description("small").size(11L).numberOfSlices(8).caloriesPerSlice(190));
+    defaults.add(new PizzaSize().id(2L).description("regular").size(13L).numberOfSlices(8).caloriesPerSlice(280));
+    defaults.add(new PizzaSize().id(3L).description("large").size(17L).numberOfSlices(12).caloriesPerSlice(290));
+    pizzaSizesRepository.insert(defaults);
+  }
+
   @JsonProperty("id")
   private Long id = null;
 
