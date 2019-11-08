@@ -3,11 +3,17 @@ package io.swagger;
 
 import io.swagger.model.Calories;
 import io.swagger.model.CreditCard;
+import io.swagger.model.Order;
+import io.swagger.model.Pizza;
 import io.swagger.model.PizzaSize;
+import io.swagger.model.PriceRule;
 import io.swagger.model.Toppings;
 import io.swagger.repository.CaloriesRepository;
 import io.swagger.repository.CreditCardsRepository;
+import io.swagger.repository.OrderRepository;
+import io.swagger.repository.PizzaRepository;
 import io.swagger.repository.PizzaSizesRepository;
+import io.swagger.repository.PriceRuleRepository;
 import io.swagger.repository.ToppingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,6 +37,12 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     private PizzaSizesRepository pizzaSizesRepository;
     @Autowired
     private CaloriesRepository caloriesRepository;
+    @Autowired
+    private PriceRuleRepository priceRuleRepository;
+    @Autowired
+    private PizzaRepository pizzaRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public void run(String... arg0) throws Exception {
@@ -41,6 +53,9 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         CreditCard.initialize(creditCardsRepository);
         PizzaSize.initialize(pizzaSizesRepository);
         Calories.initialize(caloriesRepository);
+        PriceRule.initialize(priceRuleRepository);
+        Pizza.initialize(pizzaRepository);
+        Order.initialize(orderRepository);
     }
 
     public static void main(String[] args) throws Exception {

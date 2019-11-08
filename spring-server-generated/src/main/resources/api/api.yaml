@@ -18,6 +18,8 @@ tags:
     description: suggestion related Api
   - name: priceRule
     description: priceRule related Api
+  - name: price
+    description: price related Api
   - name: topping
     description: topping related Api
   - name: store
@@ -77,6 +79,30 @@ paths:
         400:
           description: bad input parameter
 
+  /price/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          description: item id
+      tags:
+        - price
+      summary: get a price by id
+      operationId: get a Price
+      description: |
+        Get price by Id
+      produces:
+        - application/json
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            $ref: '#/definitions/Price'
+        400:
+          description: bad input parameter
+
   /suggestion/{number}:
     get:
       parameters:
@@ -99,21 +125,27 @@ paths:
         400:
           description: bad input parameter
 
-  /priceRule:
+  /priceRule/{name}:
     get:
+      parameters:
+        - in: path
+          name: name
+          required: true
+          type: string
+          description: price rule name
       tags:
         - priceRule
-      summary: get all picesRules
-      operationId: getAllPriceRules
+      summary: get a price rule by name
+      operationId: get a Price rule
       description: |
-        Get priceRules
+        Get price rule by name
+      produces:
+        - application/json
       responses:
         200:
           description: search results matching criteria
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/PriceRule'
+            $ref: '#/definitions/PriceRule'
         400:
           description: bad input parameter
 
@@ -204,8 +236,14 @@ definitions:
           $ref: '#/definitions/Toppings'
       base:
         $ref: '#/definitions/Base'
+
+  Price:
+    type: object
+    properties:
       price:
         type: number
+        format: double
+
   PizzaSize:
     type: object
     required:
@@ -229,11 +267,11 @@ definitions:
         example: 11
       noOfSlices:
         type: integer
-        format: int64
+        format: int32
         example: 8
       caloriesPerSlice:
         type: integer
-        format: int64
+        format: int32
         example: 270
   crustType:
     type: string
@@ -290,16 +328,23 @@ definitions:
   PriceRule:
     type: object
     properties:
-      name:
+      id:
         type: string
-      price:
+      vagetablePrice:
         type: number
-      ingredientType:
-        $ref: '#/definitions/ToppingType'
-      toppingType:
-        $ref: '#/definitions/ToppingType'
-      description:
-        type: string
+        format: double
+      meatPrice:
+        type: number
+        format: double
+      smallBasePrice:
+        type: number
+        format: double
+      mediumBasePrice:
+        type: number
+        format: double
+      largeBasePrice:
+        type: number
+        format: double
   Store:
     type: object
     properties:
@@ -333,14 +378,15 @@ definitions:
   Order:
     type: object
     properties:
-      pizzas:
-        type: array
-        items:
-          $ref: '#/definitions/Pizza'
-      payment:
-        $ref: '#/definitions/Payment'
       id:
         type: string
+      pizzaIds:
+        type: array
+        items:
+          type: string
+      name:
+        type: string
+
   Payment:
     type: object
     properties:
