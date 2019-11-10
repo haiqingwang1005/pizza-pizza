@@ -37,8 +37,8 @@ public class Base {
 
   private static io.swagger.models.PizzaSize convertToApiModel(PizzaSize pizzaSize){
     io.swagger.models.PizzaSize result = new io.swagger.models.PizzaSize();
-    result.setCaloriesPerSlice(new Long(pizzaSize.getCaloriesPerSlice()));
-    result.setNoOfSlices(new Long(pizzaSize.getnumberOfSlices()));
+    result.setCaloriesPerSlice(new Integer(pizzaSize.getCaloriesPerSlice()));
+    result.setNoOfSlices(new Integer(pizzaSize.getnumberOfSlices()));
     result.setDescription(pizzaSize.getDescription());
     result.setId(pizzaSize.getId());
     result.setSize(pizzaSize.getSize());
