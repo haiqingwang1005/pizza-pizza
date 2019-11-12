@@ -89,9 +89,11 @@
                 <version>0.8.2</version>
                 <configuration>
                     <excludes>
-                        <exclue>io/swagger/configuration/**/*</exclue>
-                        <exclue>io/swagger/Swagger2SpringBoot*</exclue>
-                        <exclue>io/swagger/RFC3339DateFormat*</exclue>
+                        <exclude>io/swagger/configuration/**/*</exclude>
+                        <exclude>io/swagger/Swagger2SpringBoot*</exclude>
+                        <exclude>io/swagger/RFC3339DateFormat*</exclude>
+                        <exclude>io/swagger/apis/**/*</exclude>
+                        <exclude>io/swagger/models/**/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

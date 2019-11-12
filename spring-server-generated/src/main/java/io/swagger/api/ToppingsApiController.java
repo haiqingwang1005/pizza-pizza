@@ -26,8 +26,6 @@ import java.util.List;
 @Controller
 public class ToppingsApiController implements ToppingsApi {
 
-  public static final String COLLECTION_NAME = "toppings";
-
   private static final Logger log = LoggerFactory.getLogger(ToppingsApiController.class);
 
   @Autowired
@@ -50,6 +48,10 @@ public class ToppingsApiController implements ToppingsApi {
     ToppingType toppingType = body.getToppingType();
     String description = body.getDescription();
 
+    if (name == null || name.trim().equals("")) {
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+    }
+
     Toppings existingTopping = toppingsRepository.findByName(name);
     if (existingTopping != null) {
       log.info(String.format("PizzaPizza Toppings name %s already exists! override it!", name));
@@ -69,7 +71,7 @@ public class ToppingsApiController implements ToppingsApi {
     toppingsRepository.insert(newTopping);
 
     log.info(
-        String.format("SB SB name: %s, gluten: %b, premiun: %b, toppingType: %s, description: %s",
+        String.format("name: %s, gluten: %b, premiun: %b, toppingType: %s, description: %s",
             name, isGlutenFree, isPremium, toppingType.toString(), description));
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
@@ -77,6 +79,9 @@ public class ToppingsApiController implements ToppingsApi {
   @Override
   public ResponseEntity<Void> deleteTopping(
       @NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName) {
+    if (searchName == null) {
+      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+    }
     Toppings exitingToppings = toppingsRepository.findByName(searchName);
     if (exitingToppings == null) {
       return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);

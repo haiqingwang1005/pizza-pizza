@@ -26,6 +26,8 @@ tags:
     description: store related Api
   - name: order
     description: order related Api
+  - name: promotion
+    description: promotion related Api
 
 paths:
   /pizza:
@@ -216,6 +218,74 @@ paths:
             $ref: '#/definitions/Order'
         400:
           description: bad input parameter
+
+  /promotion:
+    get:
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: promotion code to use.
+      tags:
+        - developers
+      summary: Take in an promotion code and return the discount.
+      operationId: getPromotion
+      description: |
+        Get discount by promotion code
+      produces:
+        - application/json
+      responses:
+        200:
+          description: discount after discount is succesfully returned.
+          schema:
+            $ref: '#/definitions/Promotion'
+        400:
+          description: invalid input, object invalid
+
+    post:
+      tags:
+        - admins
+      summary: add a valid promotion code with corresponding discount in database.
+      operationId: addPromotion
+      description: add a new promotion code with discount.
+      responses:
+        201:
+          description: discount for promotion code created.
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item doesn't exist
+      parameters:
+        - in: body
+          name: promotion
+          description: promotion code item to add
+          schema:
+            $ref: '#/definitions/Promotion'
+
+    delete:
+      tags:
+        - admins
+      summary: deletes a promotion code
+      operationId: deletePromotion
+      description: Delete an item in the system
+      responses:
+        201:
+          description: item deleted
+        400:
+          description: 'invalid input, object invalid'
+        409:
+          description: an existing item doesn't exist
+      parameters:
+        - in: query
+          name: searchCode
+          description: pass a promotion code string for looking up a promotion
+          required: true
+          schema:
+            type: string
+
+
 definitions:
   Pizza:
     type: object
@@ -405,6 +475,14 @@ definitions:
     enum:
       - Specialty
       - BuildYourOwn
+
+  Promotion:
+    type: object
+    properties:
+      code:
+        type: string
+      discount:
+        type: number
 # Added by API Auto Mocking Plugin
 
 
