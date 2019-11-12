@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.model.CreditCard;
 import io.swagger.model.Payment;
 import io.swagger.model.Receipt;
+import io.swagger.model.StoreLocation;
 import io.swagger.models.Price;
 import io.swagger.repository.ReceiptRepository;
 import io.swagger.service.PriceService;
@@ -73,7 +74,7 @@ public class GenerateReceiptApiController implements GenerateReceiptApi {
     }
 
     receipt = new Receipt();
-    receipt.setAddress(storesApiController.PIZZA_STORE_1_NAME);
+    receipt.setAddress(StoreLocation.PIZZA_STORE_1_NAME);
     receipt.setDate(LocalDate.now());
     receipt.setOrder(order);
     receipt.setTotalAmount(amount);

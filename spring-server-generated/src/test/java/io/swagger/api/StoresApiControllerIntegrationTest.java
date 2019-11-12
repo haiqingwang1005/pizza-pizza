@@ -28,9 +28,9 @@ public class StoresApiControllerIntegrationTest {
 
         List<StoreLocation> storeLocationList = responseEntity.getBody();
         assertEquals(storeLocationList.size(), 3);
-        assertEquals(storeLocationList.get(0).getName(), StoresApiController.PIZZA_STORE_1_NAME);
-        assertEquals(storeLocationList.get(1).getName(), StoresApiController.PIZZA_STORE_2_NAME);
-        assertEquals(storeLocationList.get(2).getName(), StoresApiController.PIZZA_STORE_3_NAME);
+        assertEquals(storeLocationList.get(0).getName(), StoreLocation.PIZZA_STORE_1_NAME);
+        assertEquals(storeLocationList.get(1).getName(), StoreLocation.PIZZA_STORE_2_NAME);
+        assertEquals(storeLocationList.get(2).getName(), StoreLocation.PIZZA_STORE_3_NAME);
     }
 
 }

@@ -8,6 +8,7 @@ import io.swagger.model.Pizza;
 import io.swagger.model.PizzaSize;
 import io.swagger.model.PriceRule;
 import io.swagger.model.Promotion;
+import io.swagger.model.StoreLocation;
 import io.swagger.model.Toppings;
 import io.swagger.repository.CaloriesRepository;
 import io.swagger.repository.CreditCardsRepository;
@@ -16,6 +17,7 @@ import io.swagger.repository.PizzaRepository;
 import io.swagger.repository.PizzaSizesRepository;
 import io.swagger.repository.PriceRuleRepository;
 import io.swagger.repository.PromotionRepository;
+import io.swagger.repository.StoreLocationRepository;
 import io.swagger.repository.ToppingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -47,6 +49,8 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     private OrderRepository orderRepository;
     @Autowired
     private PromotionRepository promotionRepository;
+    @Autowired
+    private StoreLocationRepository storeLocationRepository;
 
     @Override
     public void run(String... arg0) throws Exception {
@@ -61,6 +65,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         Pizza.initialize(pizzaRepository);
         Order.initialize(orderRepository);
         Promotion.initialize(promotionRepository);
+        StoreLocation.initialize(storeLocationRepository);
     }
 
     public static void main(String[] args) throws Exception {
