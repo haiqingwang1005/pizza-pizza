@@ -1,3 +1,4 @@
+*.iml
 *.DS_Store
 pizza/.idea/encodings.xml
 pizza/.idea/codeStyles/codeStyleConfig.xml

@@ -23,7 +23,7 @@ public interface ToppingsApi {
 
     @ApiOperation(value = "adds a topping item", nickname = "addTopping", notes = "Adds an item to the system", tags={ "admins", })
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "item created"),
+        @ApiResponse(code = 200, message = "item created"),
         @ApiResponse(code = 400, message = "invalid input, object invalid"),
         @ApiResponse(code = 409, message = "an existing item already exists") })
     @RequestMapping(value = "/toppings",
@@ -34,9 +34,9 @@ public interface ToppingsApi {
 
     @ApiOperation(value = "deletes a topping item", nickname = "deleteTopping", notes = "Delete an item in the system", tags={ "admins", })
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "item deleted"),
-        @ApiResponse(code = 400, message = "invalid input, object invalid"),
-        @ApiResponse(code = 409, message = "an existing item doesn't exist") })
+        @ApiResponse(code = 204, message = "item deleted"),
+        //@ApiResponse(code = 400, message = "invalid input, object invalid"),
+        @ApiResponse(code = 404, message = "an existing item doesn't exist") })
     @RequestMapping(value = "/toppings",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteTopping(@NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName);
@@ -45,7 +45,7 @@ public interface ToppingsApi {
     @ApiOperation(value = "searches topping", nickname = "searchTopping", notes = "By passing in the appropriate options, you can search for available toppings in the system ", response = Toppings.class, responseContainer = "List", tags={ "developers", })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "search results matching criteria", response = Toppings.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "bad input parameter") })
+        @ApiResponse(code = 404, message = "bad input parameter") })
     @RequestMapping(value = "/toppings",
         produces = { "application/json" },
         method = RequestMethod.GET)
