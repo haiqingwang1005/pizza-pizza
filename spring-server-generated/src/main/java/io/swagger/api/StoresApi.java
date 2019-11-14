@@ -26,9 +26,12 @@ import java.util.Map;
 @Api(value = "stores", description = "the stores API")
 public interface StoresApi {
 
-    @ApiOperation(value = "lists all three of our stores.", nickname = "listStores", notes = "The API returns both the street address and the latitude/longitude of each store.", response = StoreLocation.class, responseContainer = "List", tags={ "developers", })
+    @ApiOperation(value = "This API lists all three of our stores.",
+        nickname = "listStores",
+        notes = "The API returns both the street address and the latitude/longitude of all the three Pizza stores.",
+        response = StoreLocation.class, responseContainer = "List", tags={ "Stores", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "all available stores.", response = StoreLocation.class, responseContainer = "List") })
+        @ApiResponse(code = 200, message = "All available pizza stores, which have street and geo location information.", response = StoreLocation.class, responseContainer = "List") })
     @RequestMapping(value = "/stores",
         produces = { "application/json" }, 
         method = RequestMethod.GET)

@@ -1,21 +1,15 @@
 package io.swagger.api;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.model.Promotion;
 import io.swagger.repository.PromotionRepository;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-12T07:56:28.663Z[GMT]")
 @Controller
 public class PromotionController implements PromotionApi {
@@ -32,8 +26,7 @@ public class PromotionController implements PromotionApi {
   }
 
   @Override
-  public ResponseEntity<Void> addPromotion(
-      @ApiParam(value = "promotion code item to add"  )  @Valid @RequestBody Promotion promotion) {
+  public ResponseEntity<Void> addPromotion(Promotion promotion) {
     String code = promotion.getCode();
     BigDecimal discount = promotion.getDiscount();
     if (code == null || code.trim().equals("") || discount.doubleValue() > 1.0) {
@@ -57,7 +50,7 @@ public class PromotionController implements PromotionApi {
   }
 
   @Override
-  public ResponseEntity<Void> deletePromotion(@NotNull @ApiParam(value = "pass a promotion code string for looking up a promotion", required = true) @Valid @RequestParam(value = "searchCode", required = true) String searchCode) {
+  public ResponseEntity<Void> deletePromotion(String searchCode) {
     if (searchCode == null || searchCode.trim().equals("")) {
       return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
@@ -71,7 +64,7 @@ public class PromotionController implements PromotionApi {
 
 
   @Override
-  public ResponseEntity<Promotion> getPromotion(@NotNull @ApiParam(value = "promotion code to use.", required = true) @Valid @RequestParam(value = "code", required = true) String code) {
+  public ResponseEntity<Promotion> getPromotion(String code) {
     if (code == null || code.trim().equals("")) {
       return new ResponseEntity<Promotion>(HttpStatus.BAD_REQUEST);
     }

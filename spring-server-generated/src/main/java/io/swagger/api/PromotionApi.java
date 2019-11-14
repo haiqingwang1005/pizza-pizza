@@ -8,15 +8,10 @@ package io.swagger.api;
 import io.swagger.model.Promotion;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -24,17 +19,22 @@ import javax.validation.constraints.*;
 @Api(value = "promotion", description = "the promotion API")
 public interface PromotionApi {
 
-  @ApiOperation(value = "add a valid promotion code with corresponding discount in database.", nickname = "addPromotion", notes = "add a new promotion code with discount.", tags={ "admins", })
+  @ApiOperation(value = "add a valid promotion code with corresponding discount in database.",
+      nickname = "addPromotion",
+      notes = "Add a new promotion code with the percentage of original price. If the promotion code alread exist,"
+          + "override it. The price percentage means customer only need to pay the discount percentage of original price.", tags={ "Promotion", })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "discount for promotion code created. or an existing item already exist, override it"),
-      @ApiResponse(code = 400, message = "invalid input, object invalid"),})
+      @ApiResponse(code = 400, message = "invalid input, ex: empty code or discount, or the discount is larger than 1.0"),})
   @RequestMapping(value = "/promotion",
       consumes = { "application/json" },
       method = RequestMethod.POST)
   ResponseEntity<Void> addPromotion(@ApiParam(value = "promotion code item to add"  )  @Valid @RequestBody Promotion body);
 
 
-  @ApiOperation(value = "deletes a promotion code", nickname = "deletePromotion", notes = "Delete an item in the system", tags={ "admins", })
+  @ApiOperation(value = "Deletes a promotion code from the system",
+      nickname = "deletePromotion",
+      notes = "Delete a promotion code in the system", tags={ "Promotion", })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "item deleted"),
       @ApiResponse(code = 400, message = "invalid input, object invalid"),
@@ -44,7 +44,11 @@ public interface PromotionApi {
   ResponseEntity<Void> deletePromotion(@NotNull @ApiParam(value = "pass a promotion code string for looking up a promotion", required = true) @Valid @RequestParam(value = "searchCode", required = true) String searchCode);
 
 
-  @ApiOperation(value = "Take in an promotion code and return the discount.", nickname = "getPromotion", notes = "Get discount by promotion code ", response = Promotion.class, tags={ "developers", })
+  @ApiOperation(value = "Take in an promotion code and return the percentage of the final price. \n"
+      + "For example, passing a code \"keeshond\" will get back 0.6, which means the order price will be 60% of the orginal.",
+      nickname = "getPromotion",
+      notes = "Get discount by promotion code ",
+      response = Promotion.class, tags={ "Promotion", })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "discount after discount is succesfully returned.", response = Promotion.class),
       @ApiResponse(code = 400, message = "invalid input, object invalid"),

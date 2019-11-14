@@ -21,33 +21,45 @@ import java.util.List;
 @Api(value = "toppings", description = "the toppings API")
 public interface ToppingsApi {
 
-    @ApiOperation(value = "adds a topping item", nickname = "addTopping", notes = "Adds an item to the system", tags={ "admins", })
+    @ApiOperation(value = "Adds a topping item",
+        nickname = "addTopping",
+        notes = "Adds a topping to the system. If the topping name is duplicate, the old topping will be overridden with new value.",
+        tags={ "Toppings", })
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "item created, or an existing item already exists, override it"),
-        @ApiResponse(code = 400, message = "invalid input, object invalid") })
+        @ApiResponse(code = 200, message = "Item created, or an existing item already exists, override it"),
+        @ApiResponse(code = 400, message = "Invalid input, object invalid") })
     @RequestMapping(value = "/toppings",
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> addTopping(@ApiParam(value = "Topping item to add"  )  @Valid @RequestBody Toppings body);
 
 
-    @ApiOperation(value = "deletes a topping item", nickname = "deleteTopping", notes = "Delete an item in the system", tags={ "admins", })
+    @ApiOperation(value = "Deletes a topping item", nickname = "deleteTopping", notes = "Delete an topping in the database", tags={ "Toppings", })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "item deleted"),
         @ApiResponse(code = 400, message = "invalid input, object invalid"),
         @ApiResponse(code = 404, message = "an existing item doesn't exist") })
     @RequestMapping(value = "/toppings",
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteTopping(@NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName);
+    ResponseEntity<Void> deleteTopping(@NotNull @ApiParam(value = "Name of the topping that you want to delete.", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName);
 
 
-    @ApiOperation(value = "searches topping", nickname = "searchTopping", notes = "By passing in the appropriate options, you can search for available toppings in the system ", response = Toppings.class, responseContainer = "List", tags={ "developers", })
+    @ApiOperation(value = "searches topping",
+        nickname = "searchTopping",
+        notes = "By passing in the appropriate options, you can search for available toppings in the system. This API accepts three options: name, isGlutenFree and isPremium.\n" +
+        "If the name is not null, this API will return the topping with that name. If the name is not null but isGlutenFree or isPremium is present, this API will return toppings that match isGlutenFree and isPremium.\n"
+        + "If all of the three parameters are none, this API will return all available toppings. Note that the name is unique for the toppings.",
+        response = Toppings.class,
+        responseContainer = "List",
+        tags={ "Toppings", })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "search results matching criteria", response = Toppings.class, responseContainer = "List"),
-        @ApiResponse(code = 404, message = "an existing item doesn't exist")})
+        @ApiResponse(code = 404, message = "items doesn't exist")})
     @RequestMapping(value = "/toppings",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,@ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,@ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
+    ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
+        @ApiParam(value = "If the topping is gluten free. The API will return toppings that is gluten free or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
+        @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
 
 }

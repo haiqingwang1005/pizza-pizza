@@ -14,11 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -39,8 +34,7 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   @Override
-  public ResponseEntity<Void> addTopping(
-      @ApiParam(value = "Topping item to add") @Valid @RequestBody Toppings body) {
+  public ResponseEntity<Void> addTopping(Toppings body) {
 
     String name = body.getName();
     Boolean isGlutenFree = body.isIsGlutenFree();
@@ -77,8 +71,7 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteTopping(
-      @NotNull @ApiParam(value = "pass an optional search string for looking up a topping", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName) {
+  public ResponseEntity<Void> deleteTopping(String searchName) {
     if (searchName == null) {
       return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
@@ -91,10 +84,7 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   @Override
-  public ResponseEntity<List<Toppings>> searchTopping(
-      @ApiParam(value = "pass an optional search string for looking up a topping") @Valid @RequestParam(value = "searchName", required = false) String searchName,
-      @ApiParam(value = "pass an optional search boolean for guluten-free toppings") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
-      @ApiParam(value = "pass an optional search boolean for premium toppings") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
+  public ResponseEntity<List<Toppings>> searchTopping(String searchName, Boolean searchGlutenFree, Boolean searchPremium) {
 
     List<Toppings> toppings = new ArrayList<>();
     if (searchName != null) {
