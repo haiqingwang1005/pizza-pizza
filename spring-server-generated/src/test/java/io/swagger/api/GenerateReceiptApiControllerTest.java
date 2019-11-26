@@ -42,8 +42,6 @@ public class GenerateReceiptApiControllerTest {
   private OrderRepository orderRepository;
 
   @Autowired
-  private PriceService privateService;
-  @Autowired
   private GenerateReceiptApi api;
 
 
