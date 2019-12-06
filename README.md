@@ -51,6 +51,7 @@ https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/swagger-ui.html
 
 ## Link to front-end UI
 Our website: https://cs5500pizza-pizza.glitch.me/
+Our design doc: https://docs.google.com/document/d/1ASQeTQnEATPlP_PrO4RLNEgMoTXEhYU5zS5rZ0pBoMg/edit?usp=sharing
 
 ## Local Develop tips
 1. Enter spring-server-generated folder and build as command: `mvn install`
