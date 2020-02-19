@@ -1,8 +1,0 @@
-*.DS_Store
-target/
-.idea
-swagger-spring.iml
-.idea
-.swagger-codegen/
-.swagger-codegen-ignore
-*.iml
