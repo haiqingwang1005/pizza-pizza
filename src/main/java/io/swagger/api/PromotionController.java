@@ -2,8 +2,8 @@ package io.swagger.api;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.Promotion;
-import io.swagger.repository.PromotionRepository;
-import java.math.BigDecimal;
+import io.swagger.service.PromotionService;
+import io.swagger.service.PromotionService.InvalidPromotionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -12,74 +12,58 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-11-12T07:56:28.663Z[GMT]")
-@Controller
+@RestController
 public class PromotionController implements PromotionApi {
 
-  @Autowired
-  private PromotionRepository promotionRepository;
+  private final PromotionService promotionService;
 
   private final HttpServletRequest request;
+
   private static final Logger log = LoggerFactory.getLogger(PromotionApi.class);
 
-  @org.springframework.beans.factory.annotation.Autowired
-  public PromotionController(HttpServletRequest request) {
+  @Autowired
+  public PromotionController(HttpServletRequest request, PromotionService promotionService) {
     this.request = request;
+    this.promotionService = promotionService;
   }
 
   @Override
-  public ResponseEntity<Void> addPromotion(@ApiParam(value = "promotion code item to add"  )  @Valid @RequestBody Promotion promotion) {
-    String code = promotion.getCode();
-    BigDecimal discount = promotion.getDiscount();
-    if (code == null || code.trim().equals("") || discount.doubleValue() > 1.0) {
-      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+  public ResponseEntity<Promotion> addPromotion(@ApiParam(value = "promotion code item to add"  )  @Valid @RequestBody Promotion promotion) {
+    try {
+      Promotion addedPromotion = this.promotionService.addPromotion(promotion);
+      return new ResponseEntity<Promotion>(addedPromotion, HttpStatus.OK);
+    } catch (InvalidPromotionException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-    Promotion existingPromotion = promotionRepository.findByCode(code);
-    if (existingPromotion != null) {
-      log.info(String.format("Promo code %s already exists! override it!", code));
-      existingPromotion.code(code);
-      promotionRepository.save(existingPromotion);
-      return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    Promotion newPromotion = new Promotion();
-    newPromotion.code(code);
-    newPromotion.discount(discount);
-    promotionRepository.insert(newPromotion);
-    log.info(String.format("Promo code: %s", code.toString()));
-    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<Void> deletePromotion(@NotNull @ApiParam(value = "pass a promotion code string for looking up a promotion", required = true) @Valid @RequestParam(value = "searchCode", required = true) String searchCode) {
+  public ResponseEntity<Promotion> deletePromotion(@NotNull @ApiParam(value = "pass a promotion code string for looking up a promotion", required = true) @Valid @RequestParam(value = "searchCode", required = true) String searchCode) {
     if (searchCode == null || searchCode.trim().equals("")) {
-      return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    Promotion exitingPromotion = promotionRepository.findByCode(searchCode);
-    if (exitingPromotion == null) {
-      return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    Promotion promotion = promotionService.deletePromotionForCode(searchCode);
+    if (promotion == null) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    promotionRepository.delete(exitingPromotion);
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<>(promotion, HttpStatus.OK);
   }
-
 
   @Override
   public ResponseEntity<Promotion> getPromotion(@NotNull @ApiParam(value = "promotion code to use.", required = true) @Valid @RequestParam(value = "code", required = true) String code) {
     if (code == null || code.trim().equals("")) {
-      return new ResponseEntity<Promotion>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    Promotion result = promotionRepository.findByCode(code);
+    Promotion result = promotionService.getPromotionFromCode(code);
     if (result == null) {
       log.info(String.format("Promo code %s not found", code));
-      return new ResponseEntity<Promotion>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else {
-      return new ResponseEntity<Promotion>(result, HttpStatus.OK);
+      return new ResponseEntity<>(result, HttpStatus.OK);
     }
   }
 }

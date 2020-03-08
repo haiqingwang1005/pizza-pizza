@@ -1,7 +1,5 @@
 package io.swagger.api;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.model.CreditCard;
 import io.swagger.repository.CreditCardsRepository;
@@ -13,31 +11,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-25T17:23:10.744Z[GMT]")
-@Controller
-public class PaymentController implements IsValidCreditCardApi {
+@RestController
+public class ValidateCreditCardController implements ValidateCreditCardApi {
 
-  private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
-  private final ObjectMapper objectMapper;
-  private final HttpServletRequest request;
+  private static final Logger log = LoggerFactory.getLogger(ValidateCreditCardController.class);
+
+
   public static final int TOTAL_NUMBER_OF_MONTHS_IN_YEAR = 12;
   public static final int ZERO = 0;
 
+  private final CreditCardsRepository creditCardsRepository;
+  private final HttpServletRequest request;
+
   @Autowired
-  private CreditCardsRepository creditCardsRepository;
-
-  @org.springframework.beans.factory.annotation.Autowired
-  public PaymentController(ObjectMapper objectMapper, HttpServletRequest request) {
-    this.objectMapper = objectMapper;
+  public ValidateCreditCardController(HttpServletRequest request,
+      CreditCardsRepository creditCardsRepository) {
     this.request = request;
-
+    this.creditCardsRepository = creditCardsRepository;
   }
-
-
 
   public ResponseEntity<Boolean> isValid(
       @ApiParam(value = "the credit card", required = true) @Valid @RequestBody CreditCard creditCard)

@@ -1,10 +1,9 @@
 package io.swagger.service;
 
-import io.swagger.models.Pizza;
+import io.swagger.model.Pizza;
 import io.swagger.repository.PizzaRepository;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,20 +11,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class PizzaService {
 
-  @Autowired @NotNull
-  private PizzaRepository pizzaRepository;
+  @NotNull
+  private final PizzaRepository pizzaRepository;
+
+  @Autowired
+  public PizzaService(PizzaRepository pizzaRepository) {
+    this.pizzaRepository = pizzaRepository;
+  }
 
   public Pizza addPizza(Pizza pizza) {
-    UUID uuid = UUID.randomUUID();
-    pizza.setId(uuid.toString());
-    pizzaRepository.save(io.swagger.model.Pizza.convertToDaoModel(pizza));
+    pizzaRepository.save(pizza);
     return pizza;
   }
 
   public Pizza getPizzaById(String id) {
-    return io.swagger.model.Pizza.convertToApiModel(pizzaRepository.findOne(id));
+    return pizzaRepository.findOne(id);
   }
 
+  public Pizza getPizzaByName(String name) {
+    return pizzaRepository.findByDisplayName(name);
+  }
 
-
+  public List<Pizza> getAllPizzas() {
+    return pizzaRepository.findAll();
+  }
 }

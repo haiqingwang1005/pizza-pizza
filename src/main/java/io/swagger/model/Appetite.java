@@ -1,21 +1,18 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import javax.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * Gets or Sets Type
+ * Gets or Sets Apetite
  */
-public enum Type {
-  
-  SPECIALTY("Specialty"),
-  
-  BUILDYOUROWN("BuildYourOwn");
+public enum Appetite {
+  ADULT("adult"),
+  CHILD("child");
 
   private String value;
 
-  Type(String value) {
+  Appetite(String value) {
     this.value = value;
   }
 
@@ -26,8 +23,8 @@ public enum Type {
   }
 
   @JsonCreator
-  public static Type fromValue(String text) {
-    for (Type b : Type.values()) {
+  public static Appetite fromValue(String text) {
+    for (Appetite b : Appetite.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
@@ -35,4 +32,3 @@ public enum Type {
     return null;
   }
 }
-

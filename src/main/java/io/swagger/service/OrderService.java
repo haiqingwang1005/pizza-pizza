@@ -1,8 +1,8 @@
 package io.swagger.service;
 
-import io.swagger.models.Order;
+import io.swagger.model.Order;
 import io.swagger.repository.OrderRepository;
-import java.util.UUID;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +10,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderService {
 
-  @Autowired @NotNull private OrderRepository orderRepository;
+  @NotNull
+  private final OrderRepository orderRepository;
+
+  @Autowired
+  public OrderService(
+      OrderRepository orderRepository) {
+    this.orderRepository = orderRepository;
+  }
 
   public Order addOrder(Order order) {
-    UUID uuid = UUID.randomUUID();
-    order.setId(uuid.toString());
-    orderRepository.save(io.swagger.model.Order.convertToDaoModel(order));
+    orderRepository.save(order);
     return order;
   }
 
   public Order getOrderById(String id) {
-    return io.swagger.model.Order.convertToApiModel(orderRepository.findOne(id));
+    return orderRepository.findOne(id);
   }
+
+  public List<Order> getOrderByCustomerName(String name) {
+    return orderRepository.findByName(name);
+  }
+
 }

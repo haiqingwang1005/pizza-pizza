@@ -1,25 +1,17 @@
 package io.swagger.model;
 
 import io.swagger.repository.CreditCardsRepository;
-import io.swagger.repository.ToppingsRepository;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * CreditCard
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-25T17:23:10.744Z[GMT]")
 public class CreditCard   {
   static public void initialize(CreditCardsRepository creditCardsRepository) {
     if (creditCardsRepository.count() > 0) {
@@ -65,14 +57,10 @@ public class CreditCard   {
   @JsonProperty("expireMonth")
   private Integer expireMonth = null;
 
-  public CreditCard creditCardType(String creditCardType) {
-    this.creditCardType = creditCardType;
-    return this;
-  }
-
   public CreditCard() {
 
   }
+
   public CreditCard(String creditCardType, String nameOnCard, String cardNumber,
       Integer expireYear, Integer expireMonth) {
     this.creditCardType = creditCardType;
@@ -82,12 +70,16 @@ public class CreditCard   {
     this.expireMonth = expireMonth;
   }
 
+  public CreditCard creditCardType(String creditCardType) {
+    this.creditCardType = creditCardType;
+    return this;
+  }
+
   /**
    * Get creditCardType
    * @return creditCardType
   **/
   @ApiModelProperty(value = "")
-
   public String getCreditCardType() {
     return creditCardType;
   }
@@ -106,7 +98,6 @@ public class CreditCard   {
    * @return nameOnCard
   **/
   @ApiModelProperty(value = "")
-
   public String getNameOnCard() {
     return nameOnCard;
   }
@@ -125,7 +116,6 @@ public class CreditCard   {
    * @return cardNumber
   **/
   @ApiModelProperty(value = "")
-
   public String getCardNumber() {
     return cardNumber;
   }
@@ -144,7 +134,6 @@ public class CreditCard   {
    * @return expireYear
   **/
   @ApiModelProperty(value = "")
-
   public Integer getExpireYear() {
     return expireYear;
   }

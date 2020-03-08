@@ -2,7 +2,6 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.repository.OrderRepository;
-import io.swagger.repository.PriceRuleRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
@@ -13,8 +12,22 @@ import org.springframework.data.annotation.Id;
 @Data
 @Builder
 public class Order {
-  @Id
+  public static void initialize(OrderRepository orderRepository) {
+    if (orderRepository.count() > 0) {
+      return;
+    }
+    System.err.println("[INFO] Adding default order!");
+    List<String> pizzaIds = new ArrayList<>();
+    Order order = Order
+        .builder()
+        .pizzaIds(pizzaIds)
+        .name("TestOrder")
+        .build();
+    orderRepository.save(order);
+  }
+
   @JsonProperty("id")
+  @Id
   private String id;
 
   @JsonProperty("pizzaIds")
@@ -24,37 +37,22 @@ public class Order {
   @JsonProperty("name")
   private String name;
 
-  static public void initialize(OrderRepository orderRepository) {
-    if (orderRepository.count() > 0) {
-      return;
+  public Order addPizzaIdsItem(String pizzaIdsItem) {
+    if (this.pizzaIds == null) {
+      this.pizzaIds = new ArrayList<>();
     }
-
-    System.err.println("[INFO] Adding default order!");
-    List<String> pizzaIds = new ArrayList<>();
-    pizzaIds.add("a363c055-8601-47cc-88c7-353fb1cb66b8");
-    Order order = Order
-        .builder()
-        .id("d6c79fbc-5e6b-48bb-bfdd-865fc34af991")
-        .pizzaIds(pizzaIds)
-        .name("Fan Order")
-        .build();
-    orderRepository.save(order);
+    this.pizzaIds.add(pizzaIdsItem);
+    return this;
   }
 
-  public static io.swagger.models.Order convertToApiModel(Order order){
-    io.swagger.models.Order result = new io.swagger.models.Order();
-    result.setId(order.id);
-    result.setName(order.name);
-    result.setPizzaIds(order.pizzaIds);
-    return result;
-  }
-
-  public static Order convertToDaoModel(io.swagger.models.Order order){
-    Order result = Order.builder()
-        .id(order.getId())
-        .name(order.getName())
-        .pizzaIds(order.getPizzaIds())
-        .build();
-    return result;
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
   }
 }
