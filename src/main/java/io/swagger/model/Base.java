@@ -1,11 +1,14 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@JsonDeserialize(builder = Base.BaseBuilder.class)
+@Builder(builderClassName = "BaseBuilder", toBuilder = true)
 public class Base {
 
   @JsonProperty("pizzaSize")
@@ -18,10 +21,14 @@ public class Base {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  public String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class BaseBuilder {
   }
 }

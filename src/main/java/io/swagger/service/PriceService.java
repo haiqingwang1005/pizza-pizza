@@ -1,12 +1,14 @@
 package io.swagger.service;
 
+import io.swagger.repository.PizzaRepository;
+import io.swagger.repository.PriceRuleRepository;
 import io.swagger.model.Pizza;
 import io.swagger.model.PriceRule;
 import io.swagger.model.Price;
 import io.swagger.model.Toppings;
-import io.swagger.repository.PizzaRepository;
-import io.swagger.repository.PriceRuleRepository;
+
 import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

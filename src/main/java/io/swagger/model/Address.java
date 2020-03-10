@@ -1,6 +1,8 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
@@ -9,8 +11,9 @@ import org.springframework.validation.annotation.Validated;
  * Address
  */
 @Validated
-@Builder
 @Data
+@JsonDeserialize(builder = Address.AddressBuilder.class)
+@Builder(builderClassName = "AddressBuilder", toBuilder = true)
 public class Address   {
   @JsonProperty("address1")
   private String address1 = null;
@@ -36,5 +39,9 @@ public class Address   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class AddressBuilder {
   }
 }

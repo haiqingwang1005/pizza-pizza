@@ -1,16 +1,21 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.OrderRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-@Builder
+@JsonDeserialize(builder = Order.OrderBuilder.class)
+@Builder(builderClassName = "OrderBuilder", toBuilder = true)
 public class Order {
   public static void initialize(OrderRepository orderRepository) {
     if (orderRepository.count() > 0) {
@@ -49,10 +54,14 @@ public class Order {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  public String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class OrderBuilder {
   }
 }

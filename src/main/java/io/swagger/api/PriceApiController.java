@@ -1,11 +1,11 @@
 package io.swagger.api;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.model.Price;
 import io.swagger.service.PriceService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +19,7 @@ public class PriceApiController implements PriceApi{
   }
 
   @Override
-  public ResponseEntity<Price> getAPrice(@ApiParam(value = "item id",required=true) @PathVariable("id") String id) {
+  public ResponseEntity<Price> getAPrice(@ApiParam(value = "item id",required=true) @RequestParam("id") String id) {
     Price price = this.priceService.getPrice(id);
     return ResponseEntity.ok(price);
   }

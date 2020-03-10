@@ -1,12 +1,13 @@
 package io.swagger.api;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.model.Promotion;
 import io.swagger.service.PromotionService;
-import io.swagger.service.PromotionService.InvalidPromotionException;
+import io.swagger.annotations.ApiParam;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PromotionController implements PromotionApi {
+public class PromotionApiController implements PromotionApi {
 
   private final PromotionService promotionService;
 
@@ -26,7 +27,7 @@ public class PromotionController implements PromotionApi {
   private static final Logger log = LoggerFactory.getLogger(PromotionApi.class);
 
   @Autowired
-  public PromotionController(HttpServletRequest request, PromotionService promotionService) {
+  public PromotionApiController(HttpServletRequest request, PromotionService promotionService) {
     this.request = request;
     this.promotionService = promotionService;
   }
@@ -36,7 +37,7 @@ public class PromotionController implements PromotionApi {
     try {
       Promotion addedPromotion = this.promotionService.addPromotion(promotion);
       return new ResponseEntity<Promotion>(addedPromotion, HttpStatus.OK);
-    } catch (InvalidPromotionException e) {
+    } catch (PromotionService.InvalidPromotionException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }

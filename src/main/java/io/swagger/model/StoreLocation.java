@@ -1,6 +1,9 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.StoreLocationRepository;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @Data
-@Builder
+@JsonDeserialize(builder = StoreLocation.StoreLocationBuilder.class)
+@Builder(builderClassName = "StoreLocationBuilder", toBuilder = true)
 public class StoreLocation {
   public static final String PIZZA_STORE_1_NAME = "Pizza Seattle!";
   private static final BigDecimal PIZZA_STORE_1_LAT = BigDecimal.valueOf(47.626191);
@@ -113,10 +117,14 @@ public class StoreLocation {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  public String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class StoreLocationBuilder {
   }
 }

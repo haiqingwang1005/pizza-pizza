@@ -1,11 +1,13 @@
 package io.swagger.api;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.model.CreditCard;
 import io.swagger.repository.CreditCardsRepository;
+import io.swagger.annotations.ApiParam;
+
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ValidateCreditCardController implements ValidateCreditCardApi {
+public class ValidateCreditCardApiController implements ValidateCreditCardApi {
 
-  private static final Logger log = LoggerFactory.getLogger(ValidateCreditCardController.class);
+  private static final Logger log = LoggerFactory.getLogger(ValidateCreditCardApiController.class);
 
 
   public static final int TOTAL_NUMBER_OF_MONTHS_IN_YEAR = 12;
@@ -27,8 +29,8 @@ public class ValidateCreditCardController implements ValidateCreditCardApi {
   private final HttpServletRequest request;
 
   @Autowired
-  public ValidateCreditCardController(HttpServletRequest request,
-      CreditCardsRepository creditCardsRepository) {
+  public ValidateCreditCardApiController(HttpServletRequest request,
+                                         CreditCardsRepository creditCardsRepository) {
     this.request = request;
     this.creditCardsRepository = creditCardsRepository;
   }

@@ -1,16 +1,22 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
+@JsonDeserialize(builder = Customer.CustomerBuilder.class)
+@Builder(builderClassName = "CustomerBuilder", toBuilder = true)
 public class Customer {
 
   @JsonProperty("numberOfAdult")
   private Integer numberOfAdult;
   @JsonProperty("numberOfChild")
   private Integer numberOfChild;
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class CustomerBuilder {
+  }
 }

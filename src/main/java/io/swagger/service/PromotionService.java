@@ -1,8 +1,10 @@
 package io.swagger.service;
 
-import io.swagger.model.Promotion;
 import io.swagger.repository.PromotionRepository;
+import io.swagger.model.Promotion;
+
 import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

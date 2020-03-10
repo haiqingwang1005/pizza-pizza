@@ -1,11 +1,12 @@
 package io.swagger.api;
 
-import io.swagger.annotations.ApiParam;
 import io.swagger.model.Toppings;
-
 import io.swagger.service.ToppingService;
+import io.swagger.annotations.ApiParam;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

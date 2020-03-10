@@ -1,6 +1,9 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.ToppingsRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +17,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @Data
-@Builder
+@JsonDeserialize(builder = Toppings.ToppingsBuilder.class)
+@Builder(builderClassName = "ToppingsBuilder", toBuilder = true)
 public class Toppings   {
   public static void initialize(ToppingsRepository toppingsRepository) {
     if (toppingsRepository.count() > 0) {
@@ -101,5 +105,9 @@ public class Toppings   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class ToppingsBuilder {
   }
 }

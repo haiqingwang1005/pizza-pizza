@@ -1,8 +1,10 @@
 package io.swagger.service;
 
-import io.swagger.model.StoreLocation;
 import io.swagger.repository.StoreLocationRepository;
+import io.swagger.model.StoreLocation;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

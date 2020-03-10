@@ -1,19 +1,23 @@
 package io.swagger.api;
 
 import io.swagger.model.PizzaSize;
-import io.swagger.annotations.*;
 import io.swagger.service.PizzaSizeService;
+import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,7 +36,7 @@ public class PizzaSizesApiController implements PizzaSizesApi {
   }
 
   @Override
-  public ResponseEntity<PizzaSize> addPizzaSize(
+  public ResponseEntity<PizzaSize> addPizzaSizes(
       @ApiParam(value = "") @Valid @RequestBody PizzaSize body) {
 
     PizzaSize pizzaSize = pizzaSizeService.addPizzaSize(body);
@@ -43,25 +47,22 @@ public class PizzaSizesApiController implements PizzaSizesApi {
   }
 
   @Override
-  public ResponseEntity<List<PizzaSize>> getPizzaSizes() {
-    List<PizzaSize> list = pizzaSizeService.getPizzaSizes();
+  public ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return",required=true) @RequestParam("tag") String tag) {
+    List<PizzaSize> list = new ArrayList<>();
+    if (!StringUtils.isEmpty(tag)) {
+      list.add(pizzaSizeService.getPizzaSizeByTag(tag));
+    } else {
+      list = pizzaSizeService.getPizzaSizes();
+    }
+    if (CollectionUtils.isEmpty(list)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
     return new ResponseEntity<>(list, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<PizzaSize> getSizeByTag(
-      @ApiParam(value = "tag of pizza size to return",required=true) @PathVariable("tag") String tag) {
-    PizzaSize existingPizzaSize = pizzaSizeService.getPizzaSizeByTag(tag);
-    if (existingPizzaSize == null) {
-      return new ResponseEntity<PizzaSize>(HttpStatus.NOT_FOUND);
-    } else {
-      return new ResponseEntity<PizzaSize>(existingPizzaSize, HttpStatus.OK);
-    }
-  }
-
-  @Override
   public ResponseEntity<PizzaSize> deletePizzaSizeByTag(
-      @ApiParam(value = "tag of pizza size to delete", required=true)  @PathVariable("tag") String tag) {
+      @ApiParam(value = "tag of pizza size to delete", required=true)  @RequestParam("tag") String tag) {
     PizzaSize existingPizzaSize = pizzaSizeService.deletePizzaSizeByTag(tag);
     return new ResponseEntity<PizzaSize>(existingPizzaSize, HttpStatus.OK);
   }

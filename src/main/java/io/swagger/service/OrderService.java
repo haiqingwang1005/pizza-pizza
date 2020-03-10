@@ -1,9 +1,11 @@
 package io.swagger.service;
 
-import io.swagger.model.Order;
 import io.swagger.repository.OrderRepository;
+import io.swagger.model.Order;
+
 import java.util.List;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

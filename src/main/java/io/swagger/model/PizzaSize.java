@@ -1,6 +1,8 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.PizzaSizesRepository;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +14,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @Data
-@Builder
+@JsonDeserialize(builder = PizzaSize.PizzaSizeBuilder.class)
+@Builder(builderClassName = "PizzaSizeBuilder", toBuilder = true)
 public class PizzaSize {
   static public void initialize(PizzaSizesRepository pizzaSizesRepository) {
     if (pizzaSizesRepository.count() > 0) {
@@ -62,10 +65,14 @@ public class PizzaSize {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  public String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class PizzaSizeBuilder {
   }
 }

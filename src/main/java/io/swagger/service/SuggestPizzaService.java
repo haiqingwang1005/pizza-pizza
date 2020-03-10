@@ -1,13 +1,15 @@
 package io.swagger.service;
 
+import io.swagger.repository.CaloriesRepository;
+import io.swagger.repository.PizzaSizesRepository;
 import io.swagger.model.Appetite;
 import io.swagger.model.Customer;
 import io.swagger.model.PizzaSize;
 import io.swagger.model.PizzaSuggestion;
-import io.swagger.repository.CaloriesRepository;
-import io.swagger.repository.PizzaSizesRepository;
+
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

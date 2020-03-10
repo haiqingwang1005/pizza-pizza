@@ -1,13 +1,16 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.PriceRuleRepository;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-@Builder
 @Data
+@JsonDeserialize(builder = PriceRule.PriceRuleBuilder.class)
+@Builder(builderClassName = "PriceRuleBuilder", toBuilder = true)
 public class PriceRule {
   public static void initialize(PriceRuleRepository priceRuleRepository) {
     if (priceRuleRepository.count() > 0) {
@@ -52,10 +55,14 @@ public class PriceRule {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  public String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class PriceRuleBuilder {
   }
 }

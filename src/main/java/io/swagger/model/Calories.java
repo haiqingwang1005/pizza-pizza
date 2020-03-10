@@ -1,8 +1,10 @@
 package io.swagger.model;
 
 import io.swagger.repository.CaloriesRepository;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Data;
 
 @Data
