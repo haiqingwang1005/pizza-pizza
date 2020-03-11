@@ -1,23 +1,7 @@
 package io.swagger;
 
-import io.swagger.model.Calories;
-import io.swagger.model.CreditCard;
-import io.swagger.model.Order;
-import io.swagger.model.Pizza;
-import io.swagger.model.PizzaSize;
-import io.swagger.model.PriceRule;
-import io.swagger.model.Promotion;
-import io.swagger.model.StoreLocation;
-import io.swagger.model.Toppings;
-import io.swagger.repository.CaloriesRepository;
-import io.swagger.repository.CreditCardsRepository;
-import io.swagger.repository.OrderRepository;
-import io.swagger.repository.PizzaRepository;
-import io.swagger.repository.PizzaSizesRepository;
-import io.swagger.repository.PriceRuleRepository;
-import io.swagger.repository.PromotionRepository;
-import io.swagger.repository.StoreLocationRepository;
-import io.swagger.repository.ToppingsRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -35,7 +19,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = { "io.swagger", "io.swagger.api" , "io.swagger.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
 
-    private final PasswordEncoder passwordEncoder;
     private final ToppingsRepository toppingsRepository;
     private final CreditCardsRepository creditCardsRepository;
     private final PizzaSizesRepository pizzaSizesRepository;
@@ -45,16 +28,15 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final PromotionRepository promotionRepository;
     private final StoreLocationRepository storeLocationRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     public Swagger2SpringBoot(
-        PasswordEncoder passwordEncoder,
-        ToppingsRepository toppingsRepository, CreditCardsRepository creditCardsRepository,
-        PizzaSizesRepository pizzaSizesRepository, CaloriesRepository caloriesRepository,
-        PriceRuleRepository priceRuleRepository, PizzaRepository pizzaRepository,
-        OrderRepository orderRepository, PromotionRepository promotionRepository,
-        StoreLocationRepository storeLocationRepository) {
-        this.passwordEncoder = passwordEncoder;
+            ToppingsRepository toppingsRepository, CreditCardsRepository creditCardsRepository,
+            PizzaSizesRepository pizzaSizesRepository, CaloriesRepository caloriesRepository,
+            PriceRuleRepository priceRuleRepository, PizzaRepository pizzaRepository,
+            OrderRepository orderRepository, PromotionRepository promotionRepository,
+            StoreLocationRepository storeLocationRepository, AccountRepository accountRepository) {
         this.toppingsRepository = toppingsRepository;
         this.creditCardsRepository = creditCardsRepository;
         this.pizzaSizesRepository = pizzaSizesRepository;
@@ -64,6 +46,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         this.orderRepository = orderRepository;
         this.promotionRepository = promotionRepository;
         this.storeLocationRepository = storeLocationRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -80,6 +63,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         StoreLocation.initialize(storeLocationRepository);
         Pizza.initialize(pizzaRepository, toppingsRepository, pizzaSizesRepository);
         Order.initialize(orderRepository);
+        Account.initialize(accountRepository, passwordEncoder());
     }
 
     @Bean

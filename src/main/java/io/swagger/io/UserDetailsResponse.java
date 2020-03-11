@@ -23,6 +23,9 @@ public class UserDetailsResponse {
     @JsonProperty("lastname")
     private String lastname;
 
+    @JsonProperty("role")
+    private String role;
+
     @JsonPOJOBuilder(withPrefix = "")
     public static class UserDetailsResponseBuilder {
     }
@@ -33,6 +36,7 @@ public class UserDetailsResponse {
                 .username(account.getUsername())
                 .firstname(account.getFirstname())
                 .lastname(account.getLastname())
+                .role(account.getAccountRole().getRole())
                 .build();
     }
 }
