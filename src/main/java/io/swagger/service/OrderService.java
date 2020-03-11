@@ -34,4 +34,7 @@ public class OrderService {
     return orderRepository.findByName(name);
   }
 
+  public List<Order> getAllOrders() {
+    return orderRepository.findAll();
+  }
 }

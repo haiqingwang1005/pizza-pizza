@@ -19,7 +19,7 @@ public class PriceApiController implements PriceApi{
   }
 
   @Override
-  public ResponseEntity<Price> getAPrice(@ApiParam(value = "item id",required=true) @RequestParam("id") String id) {
+  public ResponseEntity<Price> getAPrice(@ApiParam(value = "item id", required = true) @RequestParam("id") String id) {
     Price price = this.priceService.getPrice(id);
     return ResponseEntity.ok(price);
   }

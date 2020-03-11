@@ -47,7 +47,7 @@ public class PizzaSizesApiController implements PizzaSizesApi {
   }
 
   @Override
-  public ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return",required=true) @RequestParam("tag") String tag) {
+  public ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return") @RequestParam(value = "tag", required = false) String tag) {
     List<PizzaSize> list = new ArrayList<>();
     if (!StringUtils.isEmpty(tag)) {
       list.add(pizzaSizeService.getPizzaSizeByTag(tag));
@@ -62,7 +62,7 @@ public class PizzaSizesApiController implements PizzaSizesApi {
 
   @Override
   public ResponseEntity<PizzaSize> deletePizzaSizeByTag(
-      @ApiParam(value = "tag of pizza size to delete", required=true)  @RequestParam("tag") String tag) {
+      @ApiParam(value = "tag of pizza size to delete", required = true)  @RequestParam("tag") String tag) {
     PizzaSize existingPizzaSize = pizzaSizeService.deletePizzaSizeByTag(tag);
     return new ResponseEntity<PizzaSize>(existingPizzaSize, HttpStatus.OK);
   }

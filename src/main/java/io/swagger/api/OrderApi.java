@@ -27,8 +27,19 @@ public interface OrderApi {
     @RequestMapping(value = "/order",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Order>> getOrder(@ApiParam(value = "order id", required = false) @RequestParam("id") String id,
-                                         @ApiParam(value = "customer name", required = true) @RequestParam("name") String name);
+    ResponseEntity<List<Order>> getOrder(@ApiParam(value = "Order id. If the id is empty, it will search by name") @RequestParam(value = "id", required = false) String id,
+                                         @ApiParam(value = "Customer name") @RequestParam(value = "name", required = false) String name);
+
+    @ApiOperation(value = "Get all orders",
+        nickname = "getAllOrder", notes = "Get all order", response = Order.class, tags={ "Admin Order Operation", })
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "search results matching criteria", response = Order.class, responseContainer = "List"),
+        @ApiResponse(code = 404, message = "order not found") })
+    @RequestMapping(value = "/admin/order",
+        produces = { "application/json" },
+        method = RequestMethod.GET)
+    ResponseEntity<List<Order>> getAllOrder();
+
 
     @ApiOperation(value = "make an order", nickname = "makeOrder", notes = "make an order to the system", response = Order.class, tags={ "Order Operation", })
     @ApiResponses(value = {

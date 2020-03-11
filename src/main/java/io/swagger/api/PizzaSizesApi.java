@@ -29,7 +29,7 @@ public interface PizzaSizesApi {
     @RequestMapping(value = "/pizzaSizes",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return",required=true) @RequestParam("tag") String tag);
+    ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return") @RequestParam(value = "tag", required = false) String tag);
 
     @ApiOperation(value = "Delete a pizza size by tag", nickname = "deletePizzaSizeByTag", notes = "Delete a pizza size", tags={ "PizzaSize Operation", })
     @ApiResponses(value = {
@@ -38,6 +38,6 @@ public interface PizzaSizesApi {
     @RequestMapping(value = "/pizzaSizes}",
         produces = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<PizzaSize> deletePizzaSizeByTag(@ApiParam(value = "tag of pizza size to delete", required=true)  @RequestParam("tag") String tag);
+    ResponseEntity<PizzaSize> deletePizzaSizeByTag(@ApiParam(value = "tag of pizza size to delete", required = true)  @RequestParam("tag") String tag);
 
 }

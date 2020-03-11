@@ -28,8 +28,8 @@ public class PizzaApiController implements PizzaApi{
   }
 
   @Override
-  public ResponseEntity<List<Pizza>> getPizza(@ApiParam(value = "pizza id",required = true) @RequestParam("id") String id,
-                                              @ApiParam(value = "pizza display name", required = false) @RequestParam("name") String name) {
+  public ResponseEntity<List<Pizza>> getPizza(@ApiParam(value = "Pizza id") @RequestParam(value = "id", required = false) String id,
+                                              @ApiParam(value = "Pizza display name") @RequestParam(value = "name", required = false) String name) {
     List<Pizza> list = new ArrayList<>();
     if (!StringUtils.isEmpty(id)) {
       list.add(pizzaService.getPizzaById(id));

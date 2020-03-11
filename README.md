@@ -49,7 +49,7 @@ https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/swagger-ui.html
 ## Local Develop tips
 1. Enter spring-server-generated folder and build as command: `mvn install`
 2. Run and deploy to local host: `mvn spring-boot:run`
-3. Play: Go to http://localhost:8080/pizza/
+3. Play: Go to http://localhost:8080/haiqingpizza/
 
 
 # API documentation

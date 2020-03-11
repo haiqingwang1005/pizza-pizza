@@ -39,6 +39,6 @@ public interface PizzaApi {
     @RequestMapping(value = "/pizza",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<Pizza>> getPizza(@ApiParam(value = "pizza id", required = false) @RequestParam("id") String id,
-                                         @ApiParam(value = "pizza display name", required = false) @RequestParam("name") String name);
+    ResponseEntity<List<Pizza>> getPizza(@ApiParam(value = "Pizza id") @RequestParam(value = "id", required = false) String id,
+                                         @ApiParam(value = "Pizza display name") @RequestParam(value = "name", required = false) String name);
 }

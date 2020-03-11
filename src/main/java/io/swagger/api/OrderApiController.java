@@ -31,8 +31,9 @@ public class OrderApiController implements OrderApi{
   }
 
   @Override
-  public ResponseEntity<List<Order>> getOrder(@ApiParam(value = "order id",required = false) @RequestParam("id") String id,
-                                              @ApiParam(value = "user name",required = false) @RequestParam("name") String name) {
+  public ResponseEntity<List<Order>> getOrder(
+      @RequestParam(value = "id", required = false) String id,
+      @RequestParam(value = "name", required = false) String name) {
     List<Order> list = new ArrayList<>();
     if (!StringUtils.isEmpty(id)) {
       list = new ArrayList<>();
@@ -42,6 +43,15 @@ public class OrderApiController implements OrderApi{
       list = orderService.getOrderByCustomerName(name);
     }
 
+    if (CollectionUtils.isEmpty(list)) {
+      return new ResponseEntity<List<Order>>(HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<List<Order>>(list, HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<List<Order>> getAllOrder() {
+    List<Order> list = orderService.getAllOrders();
     if (CollectionUtils.isEmpty(list)) {
       return new ResponseEntity<List<Order>>(HttpStatus.NOT_FOUND);
     }
