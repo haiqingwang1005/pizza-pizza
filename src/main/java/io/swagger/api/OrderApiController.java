@@ -68,7 +68,7 @@ public class OrderApiController implements OrderApi{
   }
 
   private boolean isOrderValid(Order order) {
-    if (StringUtils.isEmpty(order.getName())) {
+    if (StringUtils.isEmpty(order.getUsername())) {
       return false;
     }
     List<String> pizzaList = order.getPizzaIds();

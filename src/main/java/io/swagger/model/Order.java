@@ -26,7 +26,7 @@ public class Order {
     Order order = Order
         .builder()
         .pizzaIds(pizzaIds)
-        .name("TestOrder")
+        .username("TestOrder")
         .build();
     orderRepository.save(order);
   }
@@ -39,8 +39,14 @@ public class Order {
   @Valid
   private List<String> pizzaIds = null;
 
-  @JsonProperty("name")
-  private String name;
+  @JsonProperty("username")
+  private String username;
+
+  @JsonProperty
+  private Double price;
+
+  @JsonProperty
+  private Promotion promotion;
 
   public Order addPizzaIdsItem(String pizzaIdsItem) {
     if (this.pizzaIds == null) {
