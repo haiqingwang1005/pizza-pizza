@@ -31,13 +31,13 @@ public class Promotion {
     defaults.add(
         Promotion.builder()
             .code("keeshond")
-            .discount(BigDecimal.valueOf(0.5))
+            .discount(0.5)
             .build());
 
     defaults.add(
         Promotion.builder()
             .code("dharma")
-            .discount(BigDecimal.valueOf(0.6))
+            .discount(0.6)
             .build());
 
     promotionRepository.insert(defaults);
@@ -51,7 +51,7 @@ public class Promotion {
   private String code;
 
   @JsonProperty("discount")
-  private BigDecimal discount;
+  private Double discount;
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

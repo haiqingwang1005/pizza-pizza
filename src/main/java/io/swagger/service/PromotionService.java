@@ -3,8 +3,6 @@ package io.swagger.service;
 import io.swagger.repository.PromotionRepository;
 import io.swagger.model.Promotion;
 
-import java.math.BigDecimal;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +40,9 @@ public class PromotionService {
 
   public Promotion addPromotion(Promotion promotion) throws InvalidPromotionException{
     String code = promotion.getCode();
-    BigDecimal discount = promotion.getDiscount();
+    Double discount = promotion.getDiscount();
     if (code == null || code.trim().equals("")
-        || discount.doubleValue() > 1.0 || discount.doubleValue() <= 0.0) {
+        || discount > 1.0 || discount <= 0.0) {
       throw new InvalidPromotionException(String.format("Invalid promotion %s", promotion.toString()));
     }
 

@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.io.OrderRequestBody;
 import io.swagger.model.Order;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,6 @@ public interface OrderApi {
         produces = { "application/json" },
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Order> makeOrder(@ApiParam(value = "Order to add") @Valid @RequestBody Order order);
+    ResponseEntity<Order> makeOrder(@ApiParam(value = "Order to add") @Valid @RequestBody OrderRequestBody orderRequest);
 
 }

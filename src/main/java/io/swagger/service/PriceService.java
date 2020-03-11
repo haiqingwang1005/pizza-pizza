@@ -30,6 +30,9 @@ public class PriceService {
 
   public Price getPrice(String pizzaId) {
     Pizza pizza = pizzaRepository.findOne(pizzaId);
+    if (pizza == null) {
+      return null;
+    }
     PriceRule priceRule = priceRuleRepository.findOne(PriceRule.DEFAULT_PRICE_RULE_ID);
     double result = 0;
 

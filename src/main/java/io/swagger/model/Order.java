@@ -37,7 +37,7 @@ public class Order {
 
   @JsonProperty("pizzaIds")
   @Valid
-  private List<String> pizzaIds = null;
+  private List<String> pizzaIds;
 
   @JsonProperty("username")
   private String username;
@@ -46,15 +46,7 @@ public class Order {
   private Double price;
 
   @JsonProperty
-  private Promotion promotion;
-
-  public Order addPizzaIdsItem(String pizzaIdsItem) {
-    if (this.pizzaIds == null) {
-      this.pizzaIds = new ArrayList<>();
-    }
-    this.pizzaIds.add(pizzaIdsItem);
-    return this;
-  }
+  private Double discount;
 
   /**
    * Convert the given object to string with each line indented by 4 spaces
