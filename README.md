@@ -13,9 +13,6 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 
 Start your server as an simple java application  
 
-You can view the api documentation in swagger-ui by pointing to  
-http://localhost:8080/  
-
 Change default port value in application.properties
 
 ## Setup instructions
@@ -33,24 +30,14 @@ Change default port value in application.properties
     2. Click the "Deploy" tab.
     3. On the section "Deployment method", choose "Heroku Git"
     4. On the section "Deploy using Heroku Git", follow the commands. 
+4. Or you can just connect the github repository to Heroku to deploy
 
 ## Live Heroku cloud instance
-https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/swagger-ui.html
+https://haiqingpizza.herokuapp.com/haiqingpizza/swagger-ui.html
 
-## Link to supporting documents
-1. Final project report: https://docs.google.com/document/d/1-QAWLcwZAPoLt1BdlnGit397xVZk8L9QGixyXlEDK78/edit?usp=sharing
-2. Design doc: https://docs.google.com/document/d/1jfNpP0dIn1G8h2Zbwp45uCUYdaccwqIHluzIr3Zfe9M/edit?usp=sharing
-
-
-## Link to front-end UI
-1. Our website: https://cs5500pizza-pizza.glitch.me/
-2. Our design doc: https://docs.google.com/document/d/1ASQeTQnEATPlP_PrO4RLNEgMoTXEhYU5zS5rZ0pBoMg/edit?usp=sharing
 
 ## Local Develop tips
 1. Enter spring-server-generated folder and build as command: `mvn install`
 2. Run and deploy to local host: `mvn spring-boot:run`
-3. Play: Go to http://localhost:8080/haiqingpizza/
+3. Play: Go to http://localhost:9080/haiqingpizza/
 
-
-# API documentation
-Please check https://cs5500pizza.herokuapp.com/cs5500/Pizza_Pizza/1.0.0/swagger-ui.html#/
