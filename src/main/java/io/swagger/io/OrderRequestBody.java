@@ -17,9 +17,6 @@ public class OrderRequestBody {
     @Valid
     private List<String> pizzaIds;
 
-    @JsonProperty
-    private String username;
-
     @JsonProperty("promotionCode")
     private String promotionCode;
 

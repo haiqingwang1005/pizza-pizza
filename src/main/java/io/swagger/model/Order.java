@@ -42,10 +42,10 @@ public class Order {
   @JsonProperty("username")
   private String username;
 
-  @JsonProperty
+  @JsonProperty("price")
   private Double price;
 
-  @JsonProperty
+  @JsonProperty("discount")
   private Double discount;
 
   /**

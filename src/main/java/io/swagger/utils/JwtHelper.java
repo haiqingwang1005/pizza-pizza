@@ -38,6 +38,11 @@ public class JwtHelper {
                 DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(
                         SecurityConstants.SECRET.getBytes())).build().verify(token.replace(
                         SecurityConstants.TOKEN_PREFIX, ""));
+                Date expireAt = decodedJWT.getExpiresAt();
+                if (new Date(System.currentTimeMillis()).after(expireAt)) {
+                    log.error("Token has expired");
+                    return null;
+                }
                 String username = decodedJWT.getSubject();
                 String role = decodedJWT.getClaim(KEY_ROLE).asString();
                 if (!StringUtils.isEmpty(username)) {

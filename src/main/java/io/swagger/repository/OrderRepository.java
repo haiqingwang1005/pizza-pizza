@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepository extends MongoRepository<Order, String> {
-  List<Order> findByName(String name);
+  List<Order> findByUsername(String name);
 }

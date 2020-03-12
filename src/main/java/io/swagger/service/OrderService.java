@@ -66,7 +66,7 @@ public class OrderService {
         .discount(promotion.getDiscount())
         .username(username)
         .pizzaIds(pizzaIds)
-        .price(price)
+        .price(price * promotion.getDiscount())
         .build();
     orderRepository.save(order);
 
@@ -78,7 +78,7 @@ public class OrderService {
   }
 
   public List<Order> getOrderByCustomerName(String name) {
-    return orderRepository.findByName(name);
+    return orderRepository.findByUsername(name);
   }
 
   public List<Order> getAllOrders() {
