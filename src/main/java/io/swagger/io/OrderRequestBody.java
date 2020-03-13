@@ -3,7 +3,6 @@ package io.swagger.io;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.model.Promotion;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.Builder;

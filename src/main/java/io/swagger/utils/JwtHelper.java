@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -23,7 +24,9 @@ public class JwtHelper {
     public void injectJwtToResponseHeader(HttpServletResponse res,
                                           Account account) {
         String token = issueJwtToken(account);
+        Cookie cookie = new Cookie("token", token);
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+        res.addCookie(cookie);
     }
 
     public Account parseAccountFromRequestHeader(HttpServletRequest req) {

@@ -69,6 +69,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) {
+
         String username = ((User) auth.getPrincipal()).getUsername();
         Account account = accountRepository.findByUsername(username);
         UserDetailsResponse userDetailsResponse = UserDetailsResponse.fromAccount(account);
