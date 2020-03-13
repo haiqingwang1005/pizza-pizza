@@ -6,7 +6,9 @@ import io.swagger.repository.AccountRepository;
 import io.swagger.service.AccountService;
 import io.swagger.filter.JWTAuthorizationFilter;
 import io.swagger.utils.JwtHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.HeaderWriter;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -38,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and()
+        http.csrf().disable().headers().addHeaderWriter(headerWriter()).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/order", "/signin").authenticated()
                 .antMatchers(HttpMethod.POST, "/toppings", "/pizza", "/promotion", "/pizzaSizes").access("hasRole('ROLE_ADMIN')")
@@ -46,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/order").authenticated()
                 .antMatchers(HttpMethod.GET, "/admin/order").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, jwtHelper))
@@ -55,6 +59,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Bean
+    protected HeaderWriter headerWriter() {
+        return (httpServletRequest, httpServletResponse) -> httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:5000");
+    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder);
