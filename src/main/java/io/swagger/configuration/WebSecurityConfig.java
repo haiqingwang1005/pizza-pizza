@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/admin/order").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, jwtHelper))
@@ -61,7 +62,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected HeaderWriter headerWriter() {
-        return (httpServletRequest, httpServletResponse) -> httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:5000");
+        return (httpServletRequest, httpServletResponse) -> {
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:5000");
+            httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type");
+            httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+            httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+        };
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
