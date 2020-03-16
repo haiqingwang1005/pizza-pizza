@@ -6,6 +6,8 @@ import io.swagger.io.UserDetailsResponse;
 import io.swagger.model.Account;
 import io.swagger.repository.AccountRepository;
 import io.swagger.utils.JwtHelper;
+import io.swagger.utils.Sanitizer;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +35,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AccountRepository accountRepository;
     private final ObjectMapper objectMapper;
     private final JwtHelper jwtHelper;
+    private final Sanitizer sanitizer;
 
     @Autowired
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager,
                                    ObjectMapper objectMapper,
                                    AccountRepository accountRepository,
-                                   JwtHelper jwtHelper) {
+                                   JwtHelper jwtHelper,
+                                   Sanitizer sanitizer) {
         this.authenticationManager = authenticationManager;
         this.objectMapper = objectMapper;
         this.accountRepository = accountRepository;
         this.jwtHelper = jwtHelper;
+        this.sanitizer = sanitizer;
         setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/signin", HttpMethod.POST.name()));
     }
 
@@ -52,6 +57,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             SignInRequestBody body = objectMapper.readValue(req.getInputStream(), SignInRequestBody.class);
             log.info("Authenticate account " + body.toString());
+            String username = sanitizer.sanitize(body.getUsername());
+            String password = sanitizer.sanitize(body.getPassword());
+            if (!StringUtils.equals(username, body.getUsername()) || !StringUtils.equals(password, body.getPassword())) {
+                logger.error("Invalid user input!");
+                throw new BadCredentialsException("Invalid request");
+            }
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             body.getUsername(),

@@ -7,6 +7,7 @@ import io.swagger.service.AccountService;
 import io.swagger.filter.JWTAuthorizationFilter;
 import io.swagger.utils.JwtHelper;
 
+import io.swagger.utils.Sanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -25,18 +26,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AccountRepository accountRepository;
     private final ObjectMapper objectMapper;
     private final JwtHelper jwtHelper;
+    private final Sanitizer sanitizer;
 
     @Autowired
     public WebSecurityConfig(AccountService accountService,
                              PasswordEncoder passwordEncoder,
                              AccountRepository accountRepository,
                              ObjectMapper objectMapper,
-                             JwtHelper jwtHelper) {
+                             JwtHelper jwtHelper,
+                             Sanitizer sanitizer) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
         this.objectMapper = objectMapper;
         this.jwtHelper = jwtHelper;
+        this.sanitizer = sanitizer;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, jwtHelper))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, jwtHelper, sanitizer))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtHelper))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -63,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
-            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:5000");
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:9090");
             httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");

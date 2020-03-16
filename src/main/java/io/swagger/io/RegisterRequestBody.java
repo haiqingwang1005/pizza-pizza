@@ -3,7 +3,6 @@ package io.swagger.io;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.model.AccountRole;
 import lombok.Builder;
 import lombok.Data;
 
@@ -27,7 +26,7 @@ public class RegisterRequestBody {
     private String lastname;
 
     @JsonProperty("accountRole")
-    private AccountRole accountRole;
+    private String accountRole;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static class RegisterRequestBodyBuilder {
