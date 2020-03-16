@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/order", "/signin").authenticated()
                 .antMatchers(HttpMethod.POST, "/toppings", "/pizza", "/promotion", "/pizzaSizes").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.GET, "/order").authenticated()
+                .antMatchers(HttpMethod.GET, "/order", "/profile").authenticated()
                 .antMatchers(HttpMethod.GET, "/admin/order").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
             httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:5000");
-            httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type");
+            httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
         };

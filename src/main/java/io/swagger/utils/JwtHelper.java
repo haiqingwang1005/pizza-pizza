@@ -1,10 +1,13 @@
 package io.swagger.utils;
 
+import static io.swagger.utils.SecurityConstants.EXPIRATION_TIME;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.model.Account;
 import io.swagger.model.AccountRole;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,8 @@ public class JwtHelper {
                                           Account account) {
         String token = issueJwtToken(account);
         Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");
+        cookie.setMaxAge(EXPIRATION_TIME);
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
         res.addCookie(cookie);
     }
@@ -64,7 +69,7 @@ public class JwtHelper {
         return JWT.create()
                 .withSubject(account.getUsername())
                 .withClaim(KEY_ROLE, account.getAccountRole().getRole())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(EXPIRATION_TIME)))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
     }
 

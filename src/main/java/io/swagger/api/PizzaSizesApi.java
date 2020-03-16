@@ -35,7 +35,7 @@ public interface PizzaSizesApi {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "size deleted successfully"),
         @ApiResponse(code = 404, message = "bad request") })
-    @RequestMapping(value = "/pizzaSizes}",
+    @RequestMapping(value = "/pizzaSizes",
         produces = { "application/json" },
         method = RequestMethod.DELETE)
     ResponseEntity<PizzaSize> deletePizzaSizeByTag(@ApiParam(value = "tag of pizza size to delete", required = true)  @RequestParam("tag") String tag);
