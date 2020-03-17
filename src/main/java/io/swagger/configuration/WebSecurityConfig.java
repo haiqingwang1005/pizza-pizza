@@ -5,7 +5,7 @@ import io.swagger.filter.JWTAuthenticationFilter;
 import io.swagger.repository.AccountRepository;
 import io.swagger.service.AccountService;
 import io.swagger.filter.JWTAuthorizationFilter;
-import io.swagger.utils.JwtHelper;
+import io.swagger.utils.TokenHelper;
 
 import io.swagger.utils.Sanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final ObjectMapper objectMapper;
-    private final JwtHelper jwtHelper;
+    private final TokenHelper tokenHelper;
     private final Sanitizer sanitizer;
 
     @Autowired
@@ -33,13 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                              PasswordEncoder passwordEncoder,
                              AccountRepository accountRepository,
                              ObjectMapper objectMapper,
-                             JwtHelper jwtHelper,
+                             TokenHelper tokenHelper,
                              Sanitizer sanitizer) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
         this.objectMapper = objectMapper;
-        this.jwtHelper = jwtHelper;
+        this.tokenHelper = tokenHelper;
         this.sanitizer = sanitizer;
     }
 
@@ -57,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, jwtHelper, sanitizer))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtHelper))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper, accountRepository, tokenHelper, sanitizer))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenHelper))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

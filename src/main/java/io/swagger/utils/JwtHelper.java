@@ -13,9 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Component
@@ -23,21 +20,6 @@ public class JwtHelper {
     private static final Logger log = LoggerFactory.getLogger(JwtHelper.class);
 
     private static final String KEY_ROLE = "role";
-
-    public void injectJwtToResponseHeader(HttpServletResponse res,
-                                          Account account) {
-        String token = issueJwtToken(account);
-        Cookie cookie = new Cookie("token", token);
-        cookie.setPath("/");
-        cookie.setMaxAge(EXPIRATION_TIME);
-        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-        res.addCookie(cookie);
-    }
-
-    public Account parseAccountFromRequestHeader(HttpServletRequest req) {
-        String token = req.getHeader(SecurityConstants.HEADER_STRING);
-        return parseAccountFromJwtToken(token);
-    }
 
     public Account parseAccountFromJwtToken(String token) {
         if (!StringUtils.isEmpty(token) && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
@@ -65,7 +47,7 @@ public class JwtHelper {
         return null;
     }
 
-    private String issueJwtToken(Account account) {
+    public String issueJwtToken(Account account) {
         return JWT.create()
                 .withSubject(account.getUsername())
                 .withClaim(KEY_ROLE, account.getAccountRole().getRole())

@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.repository.AccountRepository;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,7 @@ import java.time.Instant;
 
 @Data
 @Builder
+@JsonDeserialize(builder = Account.AccountBuilder.class)
 public class Account {
     public static void initialize(AccountRepository accountRepository,
                                   PasswordEncoder passwordEncoder) {
@@ -42,4 +45,8 @@ public class Account {
     private Long createEpoch;
 
     private AccountRole accountRole;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class AccountBuilder {
+    }
 }

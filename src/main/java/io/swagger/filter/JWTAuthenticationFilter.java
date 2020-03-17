@@ -5,8 +5,8 @@ import io.swagger.io.SignInRequestBody;
 import io.swagger.io.UserDetailsResponse;
 import io.swagger.model.Account;
 import io.swagger.repository.AccountRepository;
-import io.swagger.utils.JwtHelper;
 import io.swagger.utils.Sanitizer;
+import io.swagger.utils.TokenHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,19 +34,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final AccountRepository accountRepository;
     private final ObjectMapper objectMapper;
-    private final JwtHelper jwtHelper;
+    private final TokenHelper tokenHelper;
     private final Sanitizer sanitizer;
 
     @Autowired
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager,
                                    ObjectMapper objectMapper,
                                    AccountRepository accountRepository,
-                                   JwtHelper jwtHelper,
+                                   TokenHelper tokenHelper,
                                    Sanitizer sanitizer) {
         this.authenticationManager = authenticationManager;
         this.objectMapper = objectMapper;
         this.accountRepository = accountRepository;
-        this.jwtHelper = jwtHelper;
+        this.tokenHelper = tokenHelper;
         this.sanitizer = sanitizer;
         setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/signin", HttpMethod.POST.name()));
     }
@@ -84,7 +84,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((User) auth.getPrincipal()).getUsername();
         Account account = accountRepository.findByUsername(username);
         UserDetailsResponse userDetailsResponse = UserDetailsResponse.fromAccount(account);
-        jwtHelper.injectJwtToResponseHeader(res, account);
+        tokenHelper.injectTokenToResponseHeader(res, account);
         logger.info("User details:" + userDetailsResponse.toString());
         try {
             String json = objectMapper.writeValueAsString(userDetailsResponse);

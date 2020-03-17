@@ -1,7 +1,7 @@
 package io.swagger.filter;
 
 import io.swagger.model.Account;
-import io.swagger.utils.JwtHelper;
+import io.swagger.utils.TokenHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ import java.util.ArrayList;
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger log = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 
-    private JwtHelper jwtHelper;
+    private TokenHelper tokenHelper;
 
     @Autowired
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
-                                  JwtHelper jwtHelper) {
+                                  TokenHelper tokenHelper) {
         super(authenticationManager);
-        this.jwtHelper = jwtHelper;
+        this.tokenHelper = tokenHelper;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        Account account = jwtHelper.parseAccountFromRequestHeader(request);
+        Account account = tokenHelper.parseAccountFromRequestHeader(request);
 
         if (account != null) {
             ArrayList<GrantedAuthority> authorities = new ArrayList<>();

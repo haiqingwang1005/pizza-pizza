@@ -3,7 +3,7 @@ package io.swagger.service;
 import io.swagger.repository.AccountRepository;
 import io.swagger.model.Account;
 import io.swagger.model.AccountRole;
-import io.swagger.utils.JwtHelper;
+import io.swagger.utils.TokenHelper;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,16 +28,16 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtHelper jwtHelper;
+    private final TokenHelper tokenHelper;
 
     @Autowired
     public AccountService(
             AccountRepository accountRepository,
             PasswordEncoder passwordEncoder,
-            JwtHelper jwtHelper) {
+            TokenHelper jwtHelper) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtHelper = jwtHelper;
+        this.tokenHelper = jwtHelper;
     }
 
     public Account register(HttpServletResponse res, Account account) throws AuthenticationException {
@@ -47,11 +47,18 @@ public class AccountService implements UserDetailsService {
             throw new AuthenticationException(AuthenticationError.AccountAlreadyExists);
         }
 
+        if (!StringUtils.isEmpty(account.getEmail())) {
+            existingAccount = accountRepository.findByEmail(account.getEmail());
+            if (existingAccount != null) {
+                throw new AuthenticationException(AuthenticationError.AccountAlreadyExists);
+            }
+        }
+
         account.setAccountRole(AccountRole.USER);
         account.setCreateEpoch(Instant.now().getEpochSecond());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
-        jwtHelper.injectJwtToResponseHeader(res, account);
+        tokenHelper.injectTokenToResponseHeader(res, account);
         return account;
     }
 

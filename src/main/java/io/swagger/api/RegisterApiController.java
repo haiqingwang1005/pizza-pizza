@@ -40,7 +40,7 @@ public class RegisterApiController implements RegisterApi{
     public ResponseEntity<UserDetailsResponse> registerAccount(@ApiParam(value = "Account to be registered")  @Valid @RequestBody RegisterRequestBody body) {
         try {
 
-            Account newAccount = accountService.register(response, toAccount(body));
+            Account newAccount = accountService.register(response, RegisterRequestBody.toAccount(body, sanitizer));
 
             return new ResponseEntity<UserDetailsResponse>(UserDetailsResponse.fromAccount(newAccount), HttpStatus.OK);
         } catch (AccountService.AuthenticationException e) {
@@ -55,32 +55,6 @@ public class RegisterApiController implements RegisterApi{
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-    }
-
-    private Account toAccount(RegisterRequestBody body) throws AccountService.AuthenticationException {
-        String username = sanitizer.sanitize(body.getUsername());
-        String password = sanitizer.sanitize(body.getPassword());
-        String firstname = sanitizer.sanitize(body.getFirstname());
-        String lastname = sanitizer.sanitize(body.getLastname());
-        String email = sanitizer.sanitize(body.getEmail());
-        String role = sanitizer.sanitize(body.getAccountRole());
-
-        if (!StringUtils.equals(username, body.getUsername())
-                || !StringUtils.equals(password, body.getPassword())
-                || !StringUtils.equals(firstname, body.getFirstname())
-                || !StringUtils.equals(lastname, body.getLastname())
-                || !StringUtils.equals(email, body.getEmail())
-                || !StringUtils.equals(role, body.getAccountRole())) {
-            throw new AccountService.AuthenticationException(AccountService.AuthenticationError.InvalidInput);
-        }
-        return Account.builder()
-                .username(body.getUsername())
-                .password(body.getPassword())
-                .firstname(body.getFirstname())
-                .lastname(body.getLastname())
-                .email(body.getEmail())
-                .accountRole(AccountRole.fromValue(role))
-                .build();
     }
 
 
