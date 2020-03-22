@@ -10,7 +10,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 
 
@@ -22,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 @JsonDeserialize(builder = StoreLocation.StoreLocationBuilder.class)
 @Builder(builderClassName = "StoreLocationBuilder", toBuilder = true)
 public class StoreLocation {
+  private static final String PIZZA_STORE_1_ID = "seattle";
   public static final String PIZZA_STORE_1_NAME = "Pizza Seattle!";
   private static final BigDecimal PIZZA_STORE_1_LAT = BigDecimal.valueOf(47.626191);
   private static final BigDecimal PIZZA_STORE_1_LON = BigDecimal.valueOf(-122.339351);
@@ -30,6 +30,7 @@ public class StoreLocation {
   private static final String PIZZA_STORE_1_STATE = "WA";
   private static final String PIZZA_STORE_1_ZIP = "98109";
 
+  private static final String PIZZA_STORE_2_ID = "houston";
   public static final String PIZZA_STORE_2_NAME = "Pizza Houston!";
   private static final BigDecimal PIZZA_STORE_2_LAT = BigDecimal.valueOf(29.734648);
   private static final BigDecimal PIZZA_STORE_2_LON = BigDecimal.valueOf(-95.331050);
@@ -38,6 +39,7 @@ public class StoreLocation {
   private static final String PIZZA_STORE_2_STATE = "TX";
   private static final String PIZZA_STORE_2_ZIP = "77023";
 
+  private static final String PIZZA_STORE_3_ID = "new_york";
   public static final String PIZZA_STORE_3_NAME = "Pizza New York!";
   private static final BigDecimal PIZZA_STORE_3_LAT = BigDecimal.valueOf(40.738548);
   private static final BigDecimal PIZZA_STORE_3_LON = BigDecimal.valueOf(-73.985890);
@@ -54,6 +56,7 @@ public class StoreLocation {
     List<StoreLocation> storeLocationList = new ArrayList<>();
 
     StoreLocation seattleStore = StoreLocation.builder()
+        .id(PIZZA_STORE_1_ID)
         .name(PIZZA_STORE_1_NAME)
         .geoLocation(GeoLocation.builder()
             .latitude(PIZZA_STORE_1_LAT)
@@ -69,6 +72,7 @@ public class StoreLocation {
 
 
     StoreLocation houstonStore = StoreLocation.builder()
+        .id(PIZZA_STORE_2_ID)
         .name(PIZZA_STORE_2_NAME)
         .geoLocation(GeoLocation.builder()
             .latitude(PIZZA_STORE_2_LAT)
@@ -83,6 +87,7 @@ public class StoreLocation {
         .build();
 
     StoreLocation newYorkStore = StoreLocation.builder()
+        .id(PIZZA_STORE_3_ID)
         .name(PIZZA_STORE_3_NAME)
         .geoLocation(GeoLocation.builder()
             .latitude(PIZZA_STORE_3_LAT)
@@ -103,15 +108,17 @@ public class StoreLocation {
     storeLocationRepository.insert(storeLocationList);
   }
 
+  @JsonProperty("id")
+  private String id;
+
   @JsonProperty("name")
-  @Id
-  private String name = null;
+  private String name;
 
   @JsonProperty("geo_location")
-  private GeoLocation geoLocation = null;
+  private GeoLocation geoLocation;
 
   @JsonProperty("address")
-  private Address address = null;
+  private Address address;
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

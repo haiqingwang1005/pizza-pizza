@@ -2,9 +2,11 @@ package io.swagger.api;
 
 import io.swagger.model.StoreLocation;
 import io.swagger.annotations.*;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,4 +24,14 @@ public interface StoresApi {
         method = RequestMethod.GET)
     ResponseEntity<List<StoreLocation>> listStores();
 
+    @ApiOperation(value = "This API lists get the store image",
+            nickname = "getStoreImage",
+            notes = "The API returns the store image based on the given id",
+            tags={ "Stores Location", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Return byte array for the image.") })
+    @RequestMapping(value = "/stores/image",
+            produces = MediaType.IMAGE_JPEG_VALUE,
+            method = RequestMethod.GET)
+    ResponseEntity<byte[]> getStoreImage(@RequestParam(value = "id", required = true) String id);
 }

@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
-            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:9090");
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
