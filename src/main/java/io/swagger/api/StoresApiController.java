@@ -45,7 +45,7 @@ public class StoresApiController implements StoresApi {
 
   @Override
   public ResponseEntity<byte[]> getStoreImage(@RequestParam(value = "id", required = true) String id) {
-    ClassPathResource imgFile = new ClassPathResource(String.format("image/%s.jpg", id));
+    ClassPathResource imgFile = new ClassPathResource(String.format("image/stores/%s.jpg", id));
 
     try {
       byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());

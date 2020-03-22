@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.Toppings;
 import io.swagger.annotations.*;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,17 @@ public interface ToppingsApi {
     ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
         @ApiParam(value = "If the topping is gluten free. The API will return toppings that is gluten free or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
         @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
+
+
+    @ApiOperation(value = "This API lists get the toppings image",
+            nickname = "getToppingImage",
+            notes = "The API returns the topping image based on the given name",
+            tags={ "Toppings Operation", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Return byte array for the image.") })
+    @RequestMapping(value = "/toppings/image",
+            produces = MediaType.IMAGE_JPEG_VALUE,
+            method = RequestMethod.GET)
+    ResponseEntity<byte[]> getToppingImage(@RequestParam(value = "name", required = true) String name);
 
 }

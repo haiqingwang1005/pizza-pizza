@@ -10,10 +10,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,5 +68,20 @@ public class ToppingsApiController implements ToppingsApi {
       return new ResponseEntity<>(toppings, HttpStatus.NOT_FOUND);
     }
     return new ResponseEntity<>(toppings, HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<byte[]> getToppingImage(String name) {
+    ClassPathResource imgFile = new ClassPathResource(String.format("image/toppings/%s.jpg", name));
+
+    try {
+      byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+      return ResponseEntity
+              .ok()
+              .contentType(MediaType.IMAGE_JPEG)
+              .body(bytes);
+    } catch (IOException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 }
