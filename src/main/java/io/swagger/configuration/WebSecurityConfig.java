@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().headers().addHeaderWriter(headerWriter()).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/order", "/signin").authenticated()
-                .antMatchers(HttpMethod.POST, "/toppings", "/pizza", "/promotion", "/pizzaSizes").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.POST, "/toppings", "/pizza", "/promotion", "/pizzaSizes", "/crusts").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.GET, "/order", "/profile").authenticated()
                 .antMatchers(HttpMethod.GET, "/admin/order").access("hasRole('ROLE_ADMIN')")

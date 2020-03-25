@@ -14,8 +14,8 @@ public class Base {
   @JsonProperty("pizzaSize")
   private PizzaSize pizzaSize = null;
 
-  @JsonProperty("crustType")
-  private CrustType crustType;
+  @JsonProperty("crust")
+  private Crust crust;
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

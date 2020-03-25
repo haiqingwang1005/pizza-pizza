@@ -16,12 +16,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = { "io.swagger", "io.swagger.api" , "io.swagger.configuration"})
+@ComponentScan(basePackages = {"io.swagger", "io.swagger.api", "io.swagger.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
 
     private final ToppingsRepository toppingsRepository;
     private final CreditCardsRepository creditCardsRepository;
     private final PizzaSizesRepository pizzaSizesRepository;
+    private final CrustsRepository crustsRepository;
     private final CaloriesRepository caloriesRepository;
     private final PriceRuleRepository priceRuleRepository;
     private final PizzaRepository pizzaRepository;
@@ -33,7 +34,8 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     @Autowired
     public Swagger2SpringBoot(
             ToppingsRepository toppingsRepository, CreditCardsRepository creditCardsRepository,
-            PizzaSizesRepository pizzaSizesRepository, CaloriesRepository caloriesRepository,
+            PizzaSizesRepository pizzaSizesRepository, CrustsRepository crustsRepository,
+            CaloriesRepository caloriesRepository,
             PriceRuleRepository priceRuleRepository, PizzaRepository pizzaRepository,
             OrderRepository orderRepository, PromotionRepository promotionRepository,
             StoreLocationRepository storeLocationRepository, AccountRepository accountRepository) {
@@ -47,6 +49,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         this.promotionRepository = promotionRepository;
         this.storeLocationRepository = storeLocationRepository;
         this.accountRepository = accountRepository;
+        this.crustsRepository = crustsRepository;
     }
 
     @Override
@@ -57,11 +60,12 @@ public class Swagger2SpringBoot implements CommandLineRunner {
         Toppings.initialize(toppingsRepository);
         CreditCard.initialize(creditCardsRepository);
         PizzaSize.initialize(pizzaSizesRepository);
+        Crust.initialize(crustsRepository);
         Calories.initialize(caloriesRepository);
         PriceRule.initialize(priceRuleRepository);
         Promotion.initialize(promotionRepository);
         StoreLocation.initialize(storeLocationRepository);
-        Pizza.initialize(pizzaRepository, toppingsRepository, pizzaSizesRepository);
+        Pizza.initialize(pizzaRepository, toppingsRepository, crustsRepository, pizzaSizesRepository);
         Order.initialize(orderRepository);
         Account.initialize(accountRepository, passwordEncoder());
     }

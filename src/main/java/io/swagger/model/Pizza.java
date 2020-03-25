@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.swagger.repository.CrustsRepository;
 import io.swagger.repository.PizzaRepository;
 import io.swagger.repository.PizzaSizesRepository;
 import io.swagger.repository.ToppingsRepository;
@@ -23,6 +24,7 @@ public class Pizza {
   public static void initialize(
       PizzaRepository pizzaRepository,
       ToppingsRepository toppingsRepository,
+      CrustsRepository crustsRepository,
       PizzaSizesRepository pizzaSizesRepository) {
 
     if (pizzaRepository.count() > 0) {
@@ -38,8 +40,10 @@ public class Pizza {
 
     PizzaSize pizzaSize = pizzaSizesRepository.findByTag("regular");
 
+    Crust crust = crustsRepository.findByName("original_pan");
+
     Base base = Base.builder()
-        .crustType(CrustType.ORIGINAL_STUFFED_CRUST)
+        .crust(crust)
         .pizzaSize(pizzaSize)
         .build();
     Pizza pizza = Pizza
@@ -62,12 +66,13 @@ public class Pizza {
   @JsonProperty("displayName")
   private String displayName;
 
+  // Toppings should be at least one, at most two.
   @JsonProperty("toppings")
   @Valid
-  private List<Toppings> toppings = null;
+  private List<Toppings> toppings;
 
   @JsonProperty("base")
-  private Base base = null;
+  private Base base;
 
   public Pizza addToppingsItem(Toppings toppingsItem) {
     if (this.toppings == null) {

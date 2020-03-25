@@ -29,7 +29,6 @@ public class Toppings   {
     List<Toppings> defaults = new ArrayList<>();
     defaults.add(Toppings.builder()
         .name("pepperoni")
-        .isGlutenFree(true)
         .isPremium(false)
         .toppingType(ToppingType.MEAT)
         .description("This is pepperoni topping.")
@@ -37,7 +36,6 @@ public class Toppings   {
 
     defaults.add(Toppings.builder()
         .name("sausage")
-        .isGlutenFree(true)
         .isPremium(false)
         .toppingType(ToppingType.MEAT)
         .description("This is sausage topping.")
@@ -45,14 +43,12 @@ public class Toppings   {
 
     defaults.add(Toppings.builder()
         .name("chicken")
-        .isGlutenFree(true)
         .isPremium(true).toppingType(ToppingType.MEAT)
         .description("This is chicken topping.")
         .build());
 
     defaults.add(Toppings.builder()
         .name("peppers")
-        .isGlutenFree(false)
         .isPremium(false)
         .toppingType(ToppingType.VEGETABLE)
         .description("This is peppers topping.")
@@ -60,7 +56,6 @@ public class Toppings   {
 
     defaults.add(Toppings.builder()
         .name("onions")
-        .isGlutenFree(true)
         .isPremium(false)
         .toppingType(ToppingType.VEGETABLE)
         .description("This is onions topping.")
@@ -68,7 +63,6 @@ public class Toppings   {
 
     defaults.add(Toppings.builder()
         .name("mushroom")
-        .isGlutenFree(false)
         .isPremium(true)
         .toppingType(ToppingType.VEGETABLE)
         .description("This is mushroom topping.")
@@ -79,22 +73,19 @@ public class Toppings   {
 
   @JsonProperty("id")
   @Id
-  private String id = null;
+  private String id;
 
   @JsonProperty("name")
-  private String name = null;
-
-  @JsonProperty("isGlutenFree")
-  private Boolean isGlutenFree = null;
+  private String name;
 
   @JsonProperty("isPremium")
-  private Boolean isPremium = null;
+  private Boolean isPremium;
 
   @JsonProperty("toppingType")
-  private ToppingType toppingType = null;
+  private ToppingType toppingType;
 
   @JsonProperty("description")
-  private String description = null;
+  private String description;
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

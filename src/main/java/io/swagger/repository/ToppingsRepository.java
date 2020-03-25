@@ -7,7 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface ToppingsRepository extends MongoRepository<Toppings, String> {
   Toppings findByName(String name);
 
-  List<Toppings> findByIsGlutenFree(Boolean isGlutenFree);
-
   List<Toppings> findByIsPremium(Boolean isPremium);
 }

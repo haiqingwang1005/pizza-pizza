@@ -60,10 +60,9 @@ public class ToppingsApiController implements ToppingsApi {
   @Override
   public ResponseEntity<List<Toppings>> searchTopping(
       @ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
-      @ApiParam(value = "If the topping is gluten free. The API will return toppings that is gluten free or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
       @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
 
-    List<Toppings> toppings = toppingService.findToppings(searchName, searchGlutenFree, searchPremium);
+    List<Toppings> toppings = toppingService.findToppings(searchName, searchPremium);
     if (toppings.isEmpty()) {
       return new ResponseEntity<>(toppings, HttpStatus.NOT_FOUND);
     }

@@ -41,9 +41,9 @@ public interface ToppingsApi {
 
     @ApiOperation(value = "searches topping",
         nickname = "searchTopping",
-        notes = "By passing in the appropriate options, you can search for available toppings in the system. This API accepts three options: name, isGlutenFree and isPremium.\n" +
-        "If the name is not null, this API will return the topping with that name. If the name is not null but isGlutenFree or isPremium is present, this API will return toppings that match isGlutenFree and isPremium.\n"
-        + "If all of the three parameters are none, this API will return all available toppings. Note that the name is unique for the toppings.",
+        notes = "By passing in the appropriate options, you can search for available toppings in the system. This API accepts two options: name and isPremium.\n" +
+        "If the name is not null, this API will return the topping with that name. If the name is null but isPremium is present, this API will return toppings that match isPremium.\n"
+        + "If all of the two parameters are none, this API will return all available toppings. Note that the name is unique for the toppings.",
         response = Toppings.class,
         responseContainer = "List",
         tags={ "Toppings Operation", })
@@ -54,8 +54,7 @@ public interface ToppingsApi {
         produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
-        @ApiParam(value = "If the topping is gluten free. The API will return toppings that is gluten free or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchGlutenFree", required = false) Boolean searchGlutenFree,
-        @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
+                                                 @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
 
 
     @ApiOperation(value = "This API lists get the toppings image",

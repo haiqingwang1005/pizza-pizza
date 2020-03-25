@@ -30,7 +30,6 @@ public class ToppingService {
 
   public Toppings addTopping(Toppings topping) {
     String name = topping.getName();
-    Boolean isGlutenFree = topping.getIsGlutenFree();
     Boolean isPremium = topping.getIsPremium();
     ToppingType toppingType = topping.getToppingType();
     String description = topping.getDescription();
@@ -42,7 +41,6 @@ public class ToppingService {
     Toppings existingTopping = toppingsRepository.findByName(name);
     if (existingTopping != null) {
       log.info(String.format("PizzaPizza Toppings name %s already exists! override it!", name));
-      existingTopping.setIsGlutenFree(isGlutenFree);
       existingTopping.setIsPremium(isPremium);
       existingTopping.setToppingType(toppingType);
       existingTopping.setDescription(description);
@@ -52,7 +50,6 @@ public class ToppingService {
 
     Toppings newTopping = Toppings.builder()
         .name(name)
-        .isGlutenFree(isGlutenFree)
         .isPremium(isPremium)
         .toppingType(toppingType)
         .description(description)
@@ -60,12 +57,12 @@ public class ToppingService {
     toppingsRepository.insert(newTopping);
 
     log.info(
-        String.format("name: %s, gluten: %b, premium: %b, toppingType: %s, description: %s",
-            name, isGlutenFree, isPremium, toppingType.toString(), description));
+        String.format("Topping name: %s, premium: %b, toppingType: %s, description: %s",
+            name, isPremium, toppingType.toString(), description));
     return newTopping;
   }
 
-  public List<Toppings> findToppings(String toppingName, Boolean isGlutenFree, Boolean isPremium) {
+  public List<Toppings> findToppings(String toppingName, Boolean isPremium) {
     List<Toppings> toppings = new ArrayList<>();
     if (toppingName != null) {
       Toppings result = toppingsRepository.findByName(toppingName);
@@ -73,11 +70,7 @@ public class ToppingService {
         toppings.add(result);
       }
     } else {
-      Set<Toppings> set = new HashSet<>();
-      set.addAll(toppingsRepository.findAll());
-      if (isGlutenFree != null) {
-        set.retainAll(toppingsRepository.findByIsGlutenFree(isGlutenFree));
-      }
+      Set<Toppings> set = new HashSet<>(toppingsRepository.findAll());
       if (isPremium != null) {
         set.retainAll(toppingsRepository.findByIsPremium(isPremium));
       }
