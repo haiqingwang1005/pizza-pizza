@@ -53,14 +53,14 @@ public class SuggestPizzaService {
 
       if (totalCaloriesRequired >= totalCaloriesForCurrentPizzaType) {
         int numberOfCurrentType = (int) (totalCaloriesRequired / totalCaloriesForCurrentPizzaType);
-        res.put(pizzaSize.getTag(), numberOfCurrentType);
+        res.put(pizzaSize.getName(), numberOfCurrentType);
         totalCaloriesRequired -= numberOfCurrentType * totalCaloriesForCurrentPizzaType;
       }
 
       if (totalCaloriesRequired > 0) {
         PizzaSize smallestPizzaSize = pizzaSizesList.get(pizzaSizesList.size() - 1);
-        res.put(smallestPizzaSize.getTag(),
-            res.getOrDefault(smallestPizzaSize.getTag(), 0) + 1);
+        res.put(smallestPizzaSize.getName(),
+            res.getOrDefault(smallestPizzaSize.getName(), 0) + 1);
       }
     }
     return PizzaSuggestion.builder().suggestion(res).build();

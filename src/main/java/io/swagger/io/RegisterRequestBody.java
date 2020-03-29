@@ -44,7 +44,7 @@ public class RegisterRequestBody {
             throw new AccountService.AuthenticationException(AccountService.AuthenticationError.InvalidInput);
         }
 
-        String username = sanitizer.sanitize(body.getUsername());
+        String username = sanitizer.sanitize(body.getUsername().toLowerCase());
         String password = sanitizer.sanitize(body.getPassword());
         String firstname = sanitizer.sanitize(body.getFirstname());
         String lastname = sanitizer.sanitize(body.getLastname());

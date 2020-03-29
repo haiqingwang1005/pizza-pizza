@@ -6,5 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PizzaRepository extends MongoRepository<Pizza, String> {
-  Pizza findByDisplayName(String displayName);
+    Pizza findByDisplayName(String displayName);
+
+    Pizza findByCrustNameAndSizeNameAndToppingName(String crust, String size, String topping);
+
+    Pizza findById(String id);
 }

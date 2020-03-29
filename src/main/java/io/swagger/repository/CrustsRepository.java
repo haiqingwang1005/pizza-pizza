@@ -8,4 +8,5 @@ import java.util.List;
 public interface CrustsRepository  extends MongoRepository<Crust, String> {
     List<Crust> findByIsGlutenFree(Boolean isGlutenFree);
     Crust findByName(String name);
+    Crust findById(String id);
 }

@@ -49,8 +49,8 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   @Override
-  public ResponseEntity<Toppings> deleteTopping(@NotNull @ApiParam(value = "Name of the topping that you want to delete.", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName) {
-    Toppings exitingToppings = toppingService.deleteToppings(searchName);
+  public ResponseEntity<Toppings> deleteTopping(@NotNull @ApiParam(value = "Id of the topping that you want to delete.", required = true) @Valid @RequestParam(value = "name") String name) {
+    Toppings exitingToppings = toppingService.deleteToppingsByName(name);
     if (exitingToppings == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -59,10 +59,10 @@ public class ToppingsApiController implements ToppingsApi {
 
   @Override
   public ResponseEntity<List<Toppings>> searchTopping(
-      @ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
+      @ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "name", required = false) String name,
       @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium) {
 
-    List<Toppings> toppings = toppingService.findToppings(searchName, searchPremium);
+    List<Toppings> toppings = toppingService.findToppings(name, searchPremium);
     if (toppings.isEmpty()) {
       return new ResponseEntity<>(toppings, HttpStatus.NOT_FOUND);
     }

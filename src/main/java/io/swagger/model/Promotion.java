@@ -44,7 +44,7 @@ public class Promotion {
 
   @JsonProperty("id")
   @Id
-  private String id = null;
+  private String id;
 
   @JsonProperty("code")
   private String code;

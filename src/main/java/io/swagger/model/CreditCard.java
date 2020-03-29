@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 /**
  * CreditCard
@@ -46,6 +47,10 @@ public class CreditCard   {
 
     creditCardsRepository.insert(defaults);
   }
+
+  @JsonProperty("id")
+  @Id
+  private String id;
 
   @JsonProperty("creditCardType")
   private String creditCardType;

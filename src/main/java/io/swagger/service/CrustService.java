@@ -25,6 +25,7 @@ public class CrustService {
 
     public Crust addCrust(Crust crust) {
         String name = crust.getName();
+        String title = crust.getTitle();
         Boolean isGlutenFree = crust.getIsGlutenFree();
         String desc = crust.getDescription();
 
@@ -37,6 +38,7 @@ public class CrustService {
             log.info(String.format("PizzaPizza crust name %s already exists! override it!", name));
             existingCrust.setIsGlutenFree(isGlutenFree);
             existingCrust.setDescription(desc);
+            existingCrust.setTitle(title);
             crustsRepository.save(existingCrust);
             return existingCrust;
         }
@@ -44,13 +46,14 @@ public class CrustService {
         Crust newCrust = Crust.builder()
                 .name(name)
                 .isGlutenFree(isGlutenFree)
+                .title(title)
                 .description(desc)
                 .build();
         crustsRepository.insert(newCrust);
 
         log.info(
-                String.format("Crust name: %s, gluten free: %b, description: %s",
-                        name, isGlutenFree, desc));
+                String.format("Crust name: %s, title %s, gluten free: %b, description: %s",
+                        name, title, isGlutenFree, desc));
         return newCrust;
     }
 

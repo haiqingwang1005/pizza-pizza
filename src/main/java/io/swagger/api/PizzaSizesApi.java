@@ -21,7 +21,7 @@ public interface PizzaSizesApi {
     ResponseEntity<PizzaSize> addPizzaSizes(@ApiParam(value = ""  )  @Valid @RequestBody PizzaSize body);
 
 
-    @ApiOperation(value = "Search pizza sizes. If tag is not empty, it will search by pizza size tag. Otherwise it returns all pizza sizes",
+    @ApiOperation(value = "Search pizza sizes. If name is not empty, it will search by pizza size name. Otherwise it returns all pizza sizes",
             nickname = "getPizzaSizes", notes = "Searches all available pizza sizes available in the store ", tags={ "PizzaSize Operation", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "The pizza size options"),
@@ -29,15 +29,15 @@ public interface PizzaSizesApi {
     @RequestMapping(value = "/pizzaSizes",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "tag of pizza size to return") @RequestParam(value = "tag", required = false) String tag);
+    ResponseEntity<List<PizzaSize>> getPizzaSizes(@ApiParam(value = "name of pizza size to return") @RequestParam(value = "name", required = false) String name);
 
-    @ApiOperation(value = "Delete a pizza size by tag", nickname = "deletePizzaSizeByTag", notes = "Delete a pizza size", tags={ "PizzaSize Operation", })
+    @ApiOperation(value = "Delete a pizza size by name", nickname = "deletePizzaSizeByName", notes = "Delete a pizza size", tags={ "PizzaSize Operation", })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "size deleted successfully"),
         @ApiResponse(code = 404, message = "bad request") })
     @RequestMapping(value = "/pizzaSizes",
         produces = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<PizzaSize> deletePizzaSizeByTag(@ApiParam(value = "tag of pizza size to delete", required = true)  @RequestParam("tag") String tag);
+    ResponseEntity<PizzaSize> deletePizzaSizeByName(@ApiParam(value = "name of pizza size to delete", required = true)  @RequestParam("name") String name);
 
 }

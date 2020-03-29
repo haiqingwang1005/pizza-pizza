@@ -17,62 +17,75 @@ import org.springframework.validation.annotation.Validated;
 @JsonDeserialize(builder = PizzaSize.PizzaSizeBuilder.class)
 @Builder(builderClassName = "PizzaSizeBuilder", toBuilder = true)
 public class PizzaSize {
-  static public void initialize(PizzaSizesRepository pizzaSizesRepository) {
-    if (pizzaSizesRepository.count() > 0) {
-      return;
+    static public void initialize(PizzaSizesRepository pizzaSizesRepository) {
+        if (pizzaSizesRepository.count() > 0) {
+            return;
+        }
+        System.err.println("[INFO] Adding default piazza sizes!");
+
+        pizzaSizesRepository.save(PizzaSize.builder()
+                .name("small")
+                .title("Small")
+                .inch(11L)
+                .numberOfSlices(8)
+                .caloriesPerSlice(190)
+                .price(0.0)
+                .build());
+
+        pizzaSizesRepository.save(PizzaSize.builder()
+                .name("regular")
+                .title("Medium")
+                .inch(13L)
+                .numberOfSlices(8)
+                .caloriesPerSlice(280)
+                .price(2.0)
+                .build());
+
+        pizzaSizesRepository.save(PizzaSize.builder()
+                .name("large")
+                .title("Large")
+                .inch(17L)
+                .numberOfSlices(12)
+                .caloriesPerSlice(290)
+                .price(4.0)
+                .build());
     }
-    System.err.println("[INFO] Adding default piazza sizes!");
 
-    pizzaSizesRepository.save(PizzaSize.builder()
-        .tag("small")
-        .inch(11L)
-        .numberOfSlices(8)
-        .caloriesPerSlice(190)
-        .build());
+    @JsonProperty("id")
+    @Id
+    private String id;
 
-    pizzaSizesRepository.save(PizzaSize.builder()
-        .tag("regular")
-        .inch(13L)
-        .numberOfSlices(8)
-        .caloriesPerSlice(280)
-        .build());
+    // unique
+    @JsonProperty("name")
+    private String name;
 
-    pizzaSizesRepository.save(PizzaSize.builder()
-        .tag("large")
-        .inch(17L)
-        .numberOfSlices(12)
-        .caloriesPerSlice(290)
-        .build());
-  }
+    @JsonProperty("title")
+    private String title;
 
-  @JsonProperty("id")
-  @Id
-  private String id;
+    @JsonProperty("inch")
+    private Long inch;
 
-  @JsonProperty("tag")
-  private String tag;
+    @JsonProperty("numberOfSlices")
+    private Integer numberOfSlices;
 
-  @JsonProperty("inch")
-  private Long inch;
+    @JsonProperty("caloriesPerSlice")
+    private Integer caloriesPerSlice;
 
-  @JsonProperty("numberOfSlices")
-  private Integer numberOfSlices;
+    @JsonProperty("price")
+    private Double price;
 
-  @JsonProperty("caloriesPerSlice")
-  private Integer caloriesPerSlice;
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  public String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    public String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
     }
-    return o.toString().replace("\n", "\n    ");
-  }
 
-  @JsonPOJOBuilder(withPrefix = "")
-  public static class PizzaSizeBuilder {
-  }
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class PizzaSizeBuilder {
+    }
 }

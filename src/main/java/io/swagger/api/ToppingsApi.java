@@ -21,7 +21,7 @@ public interface ToppingsApi {
         notes = "Adds a topping to the system. If the topping name is duplicate, the old topping will be overridden with new value.",
         tags={ "Toppings Operation", })
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Item created, or an existing item already exists, override it"),
+        @ApiResponse(code = 200, message = "Item created, or an existing item with the name already exists, override it"),
         @ApiResponse(code = 400, message = "Invalid input, object invalid") })
     @RequestMapping(value = "/toppings",
         consumes = { "application/json" },
@@ -36,7 +36,7 @@ public interface ToppingsApi {
         @ApiResponse(code = 404, message = "an existing item doesn't exist") })
     @RequestMapping(value = "/toppings",
         method = RequestMethod.DELETE)
-    ResponseEntity<Toppings> deleteTopping(@NotNull @ApiParam(value = "Name of the topping that you want to delete.", required = true) @Valid @RequestParam(value = "searchName", required = true) String searchName);
+    ResponseEntity<Toppings> deleteTopping(@NotNull @ApiParam(value = "Name of the topping that you want to delete.", required = true) @Valid @RequestParam(value = "name") String name);
 
 
     @ApiOperation(value = "searches topping",
@@ -53,19 +53,19 @@ public interface ToppingsApi {
     @RequestMapping(value = "/toppings",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "searchName", required = false) String searchName,
+    ResponseEntity<List<Toppings>> searchTopping(@ApiParam(value = "Name for the searched topping. It is a unique value for all toppings. If the name is present, this API will return the topping with that name.") @Valid @RequestParam(value = "name", required = false) String name,
                                                  @ApiParam(value = "If the topping is premium. The API will return toppings that is premium or not. If name is present, the API will ignore this parameter.") @Valid @RequestParam(value = "searchPremium", required = false) Boolean searchPremium);
 
 
     @ApiOperation(value = "This API lists get the toppings image",
             nickname = "getToppingImage",
-            notes = "The API returns the topping image based on the given name",
+            notes = "The API returns the topping image based on the given image key (unique name of the topping)",
             tags={ "Toppings Operation", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Return byte array for the image.") })
     @RequestMapping(value = "/toppings/image",
             produces = MediaType.IMAGE_JPEG_VALUE,
             method = RequestMethod.GET)
-    ResponseEntity<byte[]> getToppingImage(@RequestParam(value = "name", required = true) String name);
+    ResponseEntity<byte[]> getToppingImage(@ApiParam(required = true) @RequestParam(value = "name", required = true) String name);
 
 }

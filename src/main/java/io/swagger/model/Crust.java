@@ -26,29 +26,36 @@ public class Crust {
 
     List<Crust> defaults = new ArrayList<>();
     defaults.add(Crust.builder()
+            .title("Original Pan")
             .name("original_pan")
             .isGlutenFree(true)
             .description("This is original pan dough.")
+            .price(6.9)
             .build());
 
     defaults.add(Crust.builder()
+            .title("Hand Toasted")
             .name("hand_toasted")
             .isGlutenFree(true)
             .description("This is hand toasted dough.")
+            .price(8.9)
             .build());
 
     defaults.add(Crust.builder()
+            .title("Whole Wheat")
             .name("whole_wheat")
             .isGlutenFree(false)
             .description("This is whole wheat dough.")
+            .price(7.9)
             .build());
 
     defaults.add(Crust.builder()
+            .title("Thin Crisp")
             .name("thin_crisp")
             .isGlutenFree(false)
             .description("This is thin crispy dough.")
+            .price(6.9)
             .build());
-
 
     crustsRepository.insert(defaults);
   }
@@ -60,11 +67,18 @@ public class Crust {
   @JsonProperty("isGlutenFree")
   private Boolean isGlutenFree;
 
+  // unique
   @JsonProperty("name")
-  private String name = null;
+  private String name;
+
+  @JsonProperty("title")
+  private String title;
 
   @JsonProperty("description")
-  private String description = null;
+  private String description;
+
+  @JsonProperty("price")
+  private Double price;
 
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

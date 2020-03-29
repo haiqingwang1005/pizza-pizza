@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @JsonDeserialize(builder = Address.AddressBuilder.class)
 @Builder(builderClassName = "AddressBuilder", toBuilder = true)
 public class Address   {
+
   @JsonProperty("address1")
   private String address1 = null;
 
