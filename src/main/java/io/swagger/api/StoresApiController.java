@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.annotations.ApiParam;
 import io.swagger.model.StoreLocation;
 import io.swagger.service.StoreLocationService;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +46,7 @@ public class StoresApiController implements StoresApi {
   }
 
   @Override
-  public ResponseEntity<byte[]> getStoreImage(@RequestParam(value = "id", required = true) String id) {
+  public ResponseEntity<byte[]> getStoreImage(@ApiParam(required = true) @PathVariable("id") String id) {
     ClassPathResource imgFile = new ClassPathResource(String.format("image/stores/%s.jpg", id));
 
     try {

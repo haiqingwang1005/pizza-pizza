@@ -31,6 +31,7 @@ public class Crust {
             .isGlutenFree(true)
             .description("This is original pan dough.")
             .price(6.9)
+            .imagePath("/crusts/image/original_pan")
             .build());
 
     defaults.add(Crust.builder()
@@ -39,6 +40,7 @@ public class Crust {
             .isGlutenFree(true)
             .description("This is hand toasted dough.")
             .price(8.9)
+            .imagePath("/crusts/image/hand_toasted")
             .build());
 
     defaults.add(Crust.builder()
@@ -47,6 +49,7 @@ public class Crust {
             .isGlutenFree(false)
             .description("This is whole wheat dough.")
             .price(7.9)
+            .imagePath("/crusts/image/whole_wheat")
             .build());
 
     defaults.add(Crust.builder()
@@ -55,6 +58,7 @@ public class Crust {
             .isGlutenFree(false)
             .description("This is thin crispy dough.")
             .price(6.9)
+            .imagePath("/crusts/image/thin_crisp")
             .build());
 
     crustsRepository.insert(defaults);
@@ -79,6 +83,9 @@ public class Crust {
 
   @JsonProperty("price")
   private Double price;
+
+  @JsonProperty("imagePath")
+  private String imagePath;
 
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {

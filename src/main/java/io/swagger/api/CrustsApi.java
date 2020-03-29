@@ -4,10 +4,7 @@ import io.swagger.annotations.*;
 import io.swagger.model.Crust;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -59,8 +56,8 @@ public interface CrustsApi {
             tags = {"Crust Operation",})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Return byte array for the image.")})
-    @RequestMapping(value = "/crusts/image",
+    @RequestMapping(value = "/crusts/image/{name}",
             produces = MediaType.IMAGE_JPEG_VALUE,
             method = RequestMethod.GET)
-    ResponseEntity<byte[]> getCrustImage(@RequestParam(value = "name") String name);
+    ResponseEntity<byte[]> getCrustImage(@PathVariable("name") String name);
 }

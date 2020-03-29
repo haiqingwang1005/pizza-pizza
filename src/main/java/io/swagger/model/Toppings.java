@@ -35,6 +35,7 @@ public class Toppings {
                 .description("This is pepperoni topping.")
                 .price(1.99)
                 .title("Pepperoni")
+                .imagePath("/toppings/image/pepperoni")
                 .build());
 
         defaults.add(Toppings.builder()
@@ -44,6 +45,7 @@ public class Toppings {
                 .description("This is sausage topping.")
                 .price(1.99)
                 .title("Sausage")
+                .imagePath("/toppings/image/sausage")
                 .build());
 
         defaults.add(Toppings.builder()
@@ -52,6 +54,7 @@ public class Toppings {
                 .description("This is chicken topping.")
                 .price(1.99)
                 .title("Chicken")
+                .imagePath("/toppings/image/chicken")
                 .build());
 
         defaults.add(Toppings.builder()
@@ -61,6 +64,7 @@ public class Toppings {
                 .description("This is peppers topping.")
                 .price(1.49)
                 .title("Peppers")
+                .imagePath("/toppings/image/peppers")
                 .build());
 
         defaults.add(Toppings.builder()
@@ -70,6 +74,7 @@ public class Toppings {
                 .description("This is onions topping.")
                 .price(1.49)
                 .title("Onions")
+                .imagePath("/toppings/image/onions")
                 .build());
 
         defaults.add(Toppings.builder()
@@ -79,6 +84,7 @@ public class Toppings {
                 .description("This is mushroom topping.")
                 .price(1.49)
                 .title("Mushroom")
+                .imagePath("/toppings/image/mushroom")
                 .build());
 
         toppingsRepository.insert(defaults);
@@ -106,6 +112,9 @@ public class Toppings {
 
     @JsonProperty("price")
     private Double price;
+
+    @JsonProperty("imagePath")
+    private String imagePath;
 
     /**
      * Convert the given object to string with each line indented by 4 spaces

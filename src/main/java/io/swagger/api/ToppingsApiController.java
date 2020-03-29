@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,7 +71,7 @@ public class ToppingsApiController implements ToppingsApi {
   }
 
   @Override
-  public ResponseEntity<byte[]> getToppingImage(String name) {
+  public ResponseEntity<byte[]> getToppingImage(@PathVariable("name") String name) {
     ClassPathResource imgFile = new ClassPathResource(String.format("image/toppings/%s.jpg", name));
 
     try {
