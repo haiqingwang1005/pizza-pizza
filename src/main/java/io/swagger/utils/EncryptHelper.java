@@ -1,5 +1,6 @@
 package io.swagger.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -54,6 +55,9 @@ public class EncryptHelper {
             InvalidKeyException,
             BadPaddingException,
             IllegalBlockSizeException {
+        if (StringUtils.isEmpty(strToDecrypt)) {
+            throw new IllegalArgumentException("Encrypted string cannot be empty");
+        }
         setKey(secret);
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
         cipher.init(Cipher.DECRYPT_MODE, secretKey);

@@ -66,7 +66,7 @@ public class TokenHelper {
                 return objectMapper.readValue(json, Account.class);
             } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException e) {
                 log.error("Cannot parse the token", e);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error("Cannot deserialize account from token", e);
             }
         }
