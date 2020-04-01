@@ -1,9 +1,5 @@
-backend/*.iml
+*.iml
 *.DS_Store
-backend/.idea
-backend/target
+.idea
+target
 
-frontend/node_modules
-*DS_Store
-frontend/.idea
-frondend/.next
