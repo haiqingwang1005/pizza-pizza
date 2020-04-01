@@ -1,6 +1,6 @@
 //const pizza_backend_url = "http://localhost:9080/haiqingpizza";
-const pizza_backend_url = "http://backend.dharma-alpha.com/haiqingpizza";
-//const pizza_backend_url = "https://haiqingpizza.herokuapp.com/haiqingpizza";
+//const pizza_backend_url = "http://backend.dharma-alpha.com/haiqingpizza";
+const pizza_backend_url = "https://haiqingpizza.herokuapp.com/haiqingpizza";
 export const copy_right_url = "https://github.com/haiqingwang1005";
 export default pizza_backend_url;
 export const default_path = '/welcome';
