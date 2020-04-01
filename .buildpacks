@@ -1,4 +1,0 @@
-api=https://github.com/heroku/heroku-buildpack-java.git
-web=web=https://github.com/heroku/heroku-buildpack-nodejs.git
-https://github.com/heroku/heroku-buildpack-go
-
