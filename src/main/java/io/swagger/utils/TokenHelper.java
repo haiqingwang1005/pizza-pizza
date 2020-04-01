@@ -44,6 +44,7 @@ public class TokenHelper {
             log.info("token: " + token);
             Cookie cookie = new Cookie("token", token);
             cookie.setPath("/");
+            cookie.setDomain(".herokuapp.com");
             cookie.setMaxAge(EXPIRATION_TIME);
             res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
             res.addCookie(cookie);
