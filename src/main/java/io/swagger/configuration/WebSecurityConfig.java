@@ -5,7 +5,6 @@ import io.swagger.filter.JWTAuthenticationFilter;
 import io.swagger.repository.AccountRepository;
 import io.swagger.service.AccountService;
 import io.swagger.filter.JWTAuthorizationFilter;
-import io.swagger.utils.SecurityConstants;
 import io.swagger.utils.TokenHelper;
 
 import io.swagger.utils.Sanitizer;
@@ -69,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
-            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://www.dharma-alpha.com");
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://haiqing-pizza-web.herokuapp.com");
             httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
