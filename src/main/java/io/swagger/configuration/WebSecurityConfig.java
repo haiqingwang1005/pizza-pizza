@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
-            httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://" + SecurityConstants.DOMAIN + SecurityConstants.PORT);
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://haiqing-pizza-web.herokuapp.com");
             httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
