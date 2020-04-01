@@ -1,0 +1,364 @@
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --input-padding-x: 1.5rem;
+    --input-padding-y: 0.75rem;
+}
+
+.awesome_color {
+    color: black;
+}
+
+.pizza_color {
+    color: white
+}
+
+.profile-container {
+    min-height: 70vh;
+    margin-top: 12rem;
+}
+
+.post1-container {
+    margin-top: 4rem;
+}
+
+.submitter_name {
+    font-weight: bold;
+}
+
+.submitter_date {
+    font-size: x-small;
+}
+
+.post-link {
+    color: rgb(24, 24, 24);
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+}
+
+.post-link:visited {
+    color: dimgray;
+}
+
+.post-link:hover {
+    color: steelblue;
+}
+
+.btn-login {
+    color: ivory;
+    font-size: 5rem;
+}
+
+.btn-login:visited {
+    color: ivory;
+}
+
+.btn-login:hover {
+    color: ivory;
+}
+
+.small {
+    color: rgb(24, 24, 24);
+}
+
+.small:visited {
+    color: rgb(24, 24, 24);
+}
+
+.small:hover {
+    color: rgb(24, 24, 24);
+}
+
+.welcome,
+.carousel-item {
+    height: 65vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.image {
+    min-height: 100vh;
+}
+
+.login-error-title {
+    display: none;
+}
+
+.login-success-title {
+    display: none
+}
+
+/* carousel-caption */
+.carousel-caption {
+    background: rgba(1, 0, 0, 0.5);
+}
+
+/* footer */
+.footer-text {
+    margin-left: 5px;
+}
+
+/* login */
+.login-heading {
+    font-weight: bold;
+    margin-top: 5vh;
+}
+
+.login-card {
+    margin-top: 8vh;
+    margin-bottom: 8vh;
+    min-height: 50vh;
+    border-radius: 2rem;
+    background-color: #F8F9F9;
+}
+
+.login-btn {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+}
+.login-input-error,
+.login-input-error:focus {
+    box-shadow: 0 1px 1px rgba(255, 0, 0, 0.075) inset, 0 0 8px rgba(255, 0, 0, 0.5);
+    border-color: red;
+}
+
+.pizza-login-image {
+    background-size: cover;
+    background-position: center;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-label-group > input,
+.form-label-group > label {
+    padding: var(--input-padding-y) var(--input-padding-x);
+    height: auto;
+    border-radius: 2rem;
+}
+
+.form-label-group > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    /* Override default `<label>` margin */
+    line-height: 1.5;
+    color: #495057;
+    cursor: text;
+    /* Match the input under the label */
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::placeholder {
+    color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+    padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+    padding-top: calc(var(--input-padding-y) / 3);
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    font-size: 12px;
+    color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+    .form-label-group > label {
+        display: none;
+    }
+
+    .form-label-group input::-ms-input-placeholder {
+        color: #777;
+    }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+    .form-label-group > label {
+        display: none;
+    }
+
+    .form-label-group input:-ms-input-placeholder {
+        color: #777;
+    }
+}
+
+.login-background {
+    background-size: cover;
+}
+
+/* login end */
+
+/* store style */
+.store-card {
+    margin-top: 10vh;
+    z-index: -2;
+}
+
+.store-card-title {
+    font-weight: bold;
+}
+
+/* end store style */
+
+/* pizza whole style */
+.pizza-body {
+    margin-bottom: 60px;
+    min-height: 100vh;
+}
+
+/* end pizza whole style */
+
+/* pizza spinner */
+.pizza-spinner-container {
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+/* end pizza spinner */
+
+/* menu style */
+.pizza-menu-section {
+    margin-top: 5vh;
+}
+
+.pizza-menu-item {
+    margin-bottom: 3vh;
+    border-radius: 0.5rem;
+}
+
+/* menu picker modal */
+.pizza-menu-picker-card {
+    margin-bottom: 2vh;
+}
+
+.pizza-size-icon {
+    text-align: center;
+    height: 10vh;
+}
+
+.pizza-size-selector {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* menu amount picker */
+.pizza-clickable {
+    cursor: pointer;
+}
+
+.pizza-amount-picker-number {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.pizza-amount-picker-body {
+    text-align: center;
+    max-width: 18vh;
+}
+
+/* shop cart */
+.pizza-shop-cart-sticker {
+    border-radius: 2rem;
+    position: fixed;
+    bottom: 5vh;
+    right: 5vh;
+    height: 10vh;
+    width: 10vh;
+    background-color: red;
+    opacity: 0.7;
+    z-index: 10;
+    text-align: center;
+}
+
+.pizza-shop-cart-sticker-content {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/* empty cart*/
+.pizza-shop-cart-empty-container {
+    min-height: 70vh; /* These two lines are counted as one :-)       */
+}
+
+.pizza-shop-cart-empty-row {
+    margin-top: 3vh;
+}
+
+/* shop cart card */
+.pizza-shop-card-card {
+    margin-top: 3vh;
+}
+
+.pizza-shop-cart-amount-picker {
+    max-width: 10vh;
+}
+
+
+/* general style */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+       supported by Chrome, Opera and Firefox */
+}
+
+/* navigation */
+.nav-drop-link,
+.nav-drop-link:hover {
+    text-decoration: none !important;
+    color: black;
+}
