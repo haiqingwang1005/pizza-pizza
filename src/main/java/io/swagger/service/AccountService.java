@@ -3,7 +3,6 @@ package io.swagger.service;
 import io.swagger.repository.AccountRepository;
 import io.swagger.model.Account;
 import io.swagger.model.AccountRole;
-import io.swagger.utils.TokenHelper;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -28,19 +26,16 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenHelper tokenHelper;
 
     @Autowired
     public AccountService(
             AccountRepository accountRepository,
-            PasswordEncoder passwordEncoder,
-            TokenHelper jwtHelper) {
+            PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.tokenHelper = jwtHelper;
     }
 
-    public Account register(HttpServletResponse res, Account account) throws AuthenticationException {
+    public Account register(Account account) throws AuthenticationException {
         validateInputAccount(account);
         Account existingAccount = accountRepository.findByUsername(account.getUsername());
         if (existingAccount != null) {
@@ -58,7 +53,6 @@ public class AccountService implements UserDetailsService {
         account.setCreateEpoch(Instant.now().getEpochSecond());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
-        tokenHelper.injectTokenToResponseHeader(res, account);
         return account;
     }
 

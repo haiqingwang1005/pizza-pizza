@@ -36,7 +36,7 @@ public class TokenHelper {
         this.objectMapper = objectMapper;
     }
 
-    public void injectTokenToResponseHeader(HttpServletResponse res,
+    public String injectTokenToResponseHeader(HttpServletResponse res,
                                             Account account) {
         try {
             String jsonString = objectMapper.writeValueAsString(account);
@@ -46,12 +46,14 @@ public class TokenHelper {
             cookie.setPath("/");
             cookie.setMaxAge(EXPIRATION_TIME);
             res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-            res.addCookie(cookie);
+            //res.addCookie(cookie);
+            return token;
         } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException e) {
             log.error("Cannot generate the token", e);
         } catch (JsonProcessingException e) {
             log.error("Cannot serialize account to token", e);
         }
+        return null;
     }
 
     public Account parseAccountFromRequestHeader(HttpServletRequest req) {

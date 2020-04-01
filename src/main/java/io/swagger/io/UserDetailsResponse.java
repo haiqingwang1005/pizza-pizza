@@ -26,6 +26,10 @@ public class UserDetailsResponse {
     @JsonProperty("role")
     private String role;
 
+    @JsonProperty("token")
+    private String token;
+
+
     @JsonPOJOBuilder(withPrefix = "")
     public static class UserDetailsResponseBuilder {
     }

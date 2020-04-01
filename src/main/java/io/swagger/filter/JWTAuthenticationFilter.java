@@ -84,7 +84,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((User) auth.getPrincipal()).getUsername();
         Account account = accountRepository.findByUsername(username);
         UserDetailsResponse userDetailsResponse = UserDetailsResponse.fromAccount(account);
-        tokenHelper.injectTokenToResponseHeader(res, account);
+        String token = tokenHelper.injectTokenToResponseHeader(res, account);
+        userDetailsResponse.setToken(token);
         logger.info("User details:" + userDetailsResponse.toString());
         try {
             String json = objectMapper.writeValueAsString(userDetailsResponse);
