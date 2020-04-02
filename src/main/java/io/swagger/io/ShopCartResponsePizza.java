@@ -14,7 +14,7 @@ public class ShopCartResponsePizza {
     @JsonProperty("pizza")
     private Pizza pizza;
 
-    @JsonProperty("Integer")
+    @JsonProperty("number")
     private Integer number;
 
     @JsonProperty("pizzaNote")

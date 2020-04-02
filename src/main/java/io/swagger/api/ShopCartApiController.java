@@ -24,7 +24,17 @@ public class ShopCartApiController implements ShopCartApi {
     @Override
     public ResponseEntity<ShopCartResponseBody> updateShopCart(@Valid @RequestBody ShopCartRequestBody body) {
         try {
-            ShopCartResponseBody res = shopCartService.updateShopCart(body);
+            ShopCartResponseBody res = shopCartService.updateShopCart(body, true);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (ShopCartService.ShopCartServiceException e) {
+            return handleException(e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<ShopCartResponseBody> addToShopCart(@Valid @RequestBody ShopCartRequestBody body) {
+        try {
+            ShopCartResponseBody res = shopCartService.updateShopCart(body, false);
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (ShopCartService.ShopCartServiceException e) {
             return handleException(e);
@@ -66,7 +76,7 @@ public class ShopCartApiController implements ShopCartApi {
     @Override
     public ResponseEntity<ShopCartResponseBody> updateShopCartAdmin(@Valid @RequestBody ShopCartRequestBody body) {
         try {
-            ShopCartResponseBody res = shopCartService.updateShopCart(body);
+            ShopCartResponseBody res = shopCartService.updateShopCart(body, true);
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (ShopCartService.ShopCartServiceException e) {
             return handleException(e);

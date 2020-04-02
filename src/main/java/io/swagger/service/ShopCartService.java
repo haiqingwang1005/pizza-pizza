@@ -8,6 +8,8 @@ import io.swagger.model.*;
 import io.swagger.repository.*;
 import io.swagger.utils.AuthInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.*;
 
 @Service
 public class ShopCartService {
+    private static final Logger log = LoggerFactory.getLogger(ShopCartService.class);
     private final ShopCartRepository shopCartRepository;
     private final ToppingsRepository toppingsRepository;
     private final CrustsRepository crustsRepository;
@@ -68,19 +71,23 @@ public class ShopCartService {
         return shopCartToResponseBody(shopCart);
     }
 
-    public ShopCartResponseBody updateShopCart(ShopCartRequestBody body) throws ShopCartServiceException {
+    public ShopCartResponseBody updateShopCart(ShopCartRequestBody body, boolean shouldReplace) throws ShopCartServiceException {
         AuthInfo auth = AuthInfo.getAccountFromAuth();
-        if (auth.getAccountRole() != AccountRole.ADMIN && !StringUtils.equals(body.getUsername(), auth.getUsername())) {
-            throw new ShopCartServiceException(ShopCartServiceError.User_Mismatch);
+
+        String username;
+        if (auth.getAccountRole() == AccountRole.ADMIN) {
+            username = body.getUsername();
+        } else {
+            username = auth.getUsername();
         }
 
-        ShopCart shopCart = shopCartRepository.findByUsername(body.getUsername());
+        ShopCart shopCart = shopCartRepository.findByUsername(username);
         if (shopCart == null) {
-            shopCart = ShopCart.builder().username(body.getUsername()).build();
+            shopCart = ShopCart.builder().username(username).build();
         }
 
         List<ShopCartRequestPizza> requestPizzas = body.getPizzaList();
-        updateShopCartPizza(shopCart, requestPizzas);
+        updateShopCartPizza(shopCart, requestPizzas, shouldReplace);
         shopCartRepository.save(shopCart);
 
         return shopCartToResponseBody(shopCart);
@@ -104,8 +111,9 @@ public class ShopCartService {
 
     private Pizza getPizzaFromRequest(ShopCartRequestPizza pizzaInRequest) throws ShopCartServiceException {
         Pizza pizza;
+        log.info("pizzaInRequest id: " + pizzaInRequest.getPizzaId());
         if (!StringUtils.isEmpty(pizzaInRequest.getPizzaId())) {
-            pizza = pizzaRepository.findById(pizzaInRequest.getPizzaId());
+            pizza = pizzaRepository.findOne(pizzaInRequest.getPizzaId());
         } else {
             pizza = pizzaRepository.findByCrustNameAndSizeNameAndToppingName(
                     pizzaInRequest.getCrustName(),
@@ -118,20 +126,32 @@ public class ShopCartService {
         return pizza;
     }
 
-    private void updateShopCartPizza(ShopCart shopCart, List<ShopCartRequestPizza> requestPizzas) throws ShopCartServiceException {
-        Map<String, ShopCartPizza> pizzasMap = new HashMap<>();
+    private void updateShopCartPizza(
+            ShopCart shopCart,
+            List<ShopCartRequestPizza> requestPizzas,
+            boolean shouldReplace) throws ShopCartServiceException {
+        Map<String, ShopCartPizza> pizzasMap = shopCart.getPizzas() == null ? new HashMap<>() : shopCart.getPizzas();
         for (ShopCartRequestPizza pizzaInRequest : requestPizzas) {
             Pizza pizza = getPizzaFromRequest(pizzaInRequest);
             ShopCartPizza pizzaInCart = ShopCartPizza.builder()
                     .pizzaNote(pizzaInRequest.getPizzaNote())
-                    .number(pizzaInRequest.getNumber() < 0 ? 0 : pizzaInRequest.getNumber())
+                    .number((pizzaInRequest.getNumber() == null || pizzaInRequest.getNumber() < 0) ? 0 : pizzaInRequest.getNumber())
                     .build();
 
             ShopCartPizza pizzaInCartInMap = pizzasMap.get(pizza.getId());
             if (pizzaInCartInMap == null) {
                 pizzasMap.put(pizza.getId(), pizzaInCart);
             } else {
-                pizzasMap.put(pizza.getId(), pizzaInCart.merge(pizzaInCartInMap));
+                if (shouldReplace) {
+                    if (pizzaInCart.getNumber() > 0) {
+                        pizzasMap.put(pizza.getId(), pizzaInCart);
+                    } else {
+                        pizzasMap.remove(pizza.getId());
+                    }
+
+                } else {
+                    pizzasMap.put(pizza.getId(), pizzaInCart.merge(pizzaInCartInMap));
+                }
             }
         }
         shopCart.setPizzas(pizzasMap);
@@ -145,7 +165,7 @@ public class ShopCartService {
         for (Map.Entry<String, ShopCartPizza> entry : pizzas.entrySet()) {
             String pizzaId = entry.getKey();
             ShopCartPizza shopCartPizza = entry.getValue();
-            Pizza pizza = pizzaRepository.findById(pizzaId);
+            Pizza pizza = pizzaRepository.findOne(pizzaId);
             ShopCartResponsePizza shopCartResponsePizza = ShopCartResponsePizza.builder()
                     .pizza(pizza)
                     .number(shopCartPizza.getNumber())

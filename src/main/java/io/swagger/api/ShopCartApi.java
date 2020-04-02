@@ -21,6 +21,23 @@ public interface ShopCartApi {
             response = ShopCartResponseBody.class,
             tags = {"Shop Cart Operation",})
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "item updated",
+                    response = ShopCart.class),
+            @ApiResponse(code = 400, message = "invalid input, object invalid"),
+            @ApiResponse(code = 401, message = "Not authorized")})
+    @RequestMapping(value = "/cart",
+            produces = {"application/json"},
+            consumes = {"application/json"},
+            method = RequestMethod.PUT)
+    ResponseEntity<ShopCartResponseBody> updateShopCart(@ApiParam(value = "items to be updated") @Valid @RequestBody ShopCartRequestBody body);
+
+    @ApiOperation(value = "Update pizza or sides or drinks in the shop cart. " +
+            "The username in request body must match that in the token header. " +
+            "If the items don't exit in the cart, it will add the items. If the items exist in the cart, it updates the number",
+            nickname = "updateShopCart", notes = "Update items to the shop cart",
+            response = ShopCartResponseBody.class,
+            tags = {"Shop Cart Operation",})
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "item created",
                     response = ShopCart.class),
             @ApiResponse(code = 400, message = "invalid input, object invalid"),
@@ -29,7 +46,8 @@ public interface ShopCartApi {
             produces = {"application/json"},
             consumes = {"application/json"},
             method = RequestMethod.POST)
-    ResponseEntity<ShopCartResponseBody> updateShopCart(@ApiParam(value = "items to be updated") @Valid @RequestBody ShopCartRequestBody body);
+    ResponseEntity<ShopCartResponseBody> addToShopCart(@ApiParam(value = "items to be updated") @Valid @RequestBody ShopCartRequestBody body);
+
 
     @ApiOperation(value = "Get shop cart items of the username in the token.",
             nickname = "getShopCart",

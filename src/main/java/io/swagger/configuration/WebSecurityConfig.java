@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().headers().addHeaderWriter(headerWriter()).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/order", "/signin", "/cart").authenticated()
+                .antMatchers(HttpMethod.PUT, "/cart").authenticated()
                 .antMatchers(HttpMethod.POST, "/toppings", "/pizza", "/promotion", "/pizzaSizes", "/crusts", "/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/cart").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/**").access("hasRole('ROLE_ADMIN')")
@@ -68,8 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected HeaderWriter headerWriter() {
         return (httpServletRequest, httpServletResponse) -> {
-            httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://haiqing-pizza-web.herokuapp.com");
-            //httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            //httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://haiqing-pizza-web.herokuapp.com");
+            httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
             httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
             httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
